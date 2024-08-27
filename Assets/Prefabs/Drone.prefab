@@ -456,6 +456,7 @@ GameObject:
   - component: {fileID: 2752078817112344236}
   - component: {fileID: 4624179986562834306}
   - component: {fileID: 437805421395785461}
+  - component: {fileID: 640873658788788968}
   - component: {fileID: 6162480525521934823}
   - component: {fileID: 4451719572638741890}
   - component: {fileID: 8097149444175099009}
@@ -530,6 +531,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.47, y: 0.2, z: 0.52}
   m_Center: {x: 0, y: 0.1, z: 0}
+--- !u!114 &640873658788788968
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5549455562311884032}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6c10235b38402047a18f361a6bc1357, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &6162480525521934823
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -557,7 +570,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 26
+    VectorObservationSize: 56
     NumStackedVectorObservations: 1
     m_ActionSpec:
       m_NumContinuousActions: 2
@@ -566,7 +579,7 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 1
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 5022602860645237092, guid: 24cb7b6d4f32d5141b3fa279027049d3, type: 3}
+  m_Model: {fileID: 0}
   m_InferenceDevice: 1
   m_BehaviorType: 0
   m_BehaviorName: DroneAgent

@@ -62,6 +62,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Drone_Manager.cs" />
     <Compile Include="Assets\Scripts\Drone_Values.cs" />
+    <Compile Include="Assets\Scripts\Drone_Common.cs" />
     <Compile Include="Assets\Scripts\Leader_Drone.cs" />
     <Compile Include="Assets\Scripts\Drone_Agent.cs" />
   </ItemGroup>
