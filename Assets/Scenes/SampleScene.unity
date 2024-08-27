@@ -177,7 +177,7 @@ MonoBehaviour:
   leaderDroneMultiplier: 0.2
   numWaypoints: 0
   userControlledOrAutomated: 0
-  r_sense: 10
+  r_sense: 15
   r_out: 7
   r_in: 3
   r_tooclose: 2
