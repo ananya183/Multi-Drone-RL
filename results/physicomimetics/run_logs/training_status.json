@@ -1,0 +1,65 @@
+{
+    "DroneAgent": {
+        "checkpoints": [
+            {
+                "steps": 12499990,
+                "file_path": "results\\physicomimetics\\DroneAgent\\DroneAgent-12499990.onnx",
+                "reward": null,
+                "creation_time": 1724901615.5751197,
+                "auxillary_file_paths": [
+                    "results\\physicomimetics\\DroneAgent\\DroneAgent-12499990.pt"
+                ]
+            },
+            {
+                "steps": 12999982,
+                "file_path": "results\\physicomimetics\\DroneAgent\\DroneAgent-12999982.onnx",
+                "reward": 43.152689361572264,
+                "creation_time": 1724902891.785984,
+                "auxillary_file_paths": [
+                    "results\\physicomimetics\\DroneAgent\\DroneAgent-12999982.pt"
+                ]
+            },
+            {
+                "steps": 13499949,
+                "file_path": "results\\physicomimetics\\DroneAgent\\DroneAgent-13499949.onnx",
+                "reward": null,
+                "creation_time": 1724904168.8708737,
+                "auxillary_file_paths": [
+                    "results\\physicomimetics\\DroneAgent\\DroneAgent-13499949.pt"
+                ]
+            },
+            {
+                "steps": 13999948,
+                "file_path": "results\\physicomimetics\\DroneAgent\\DroneAgent-13999948.onnx",
+                "reward": null,
+                "creation_time": 1724905439.3286521,
+                "auxillary_file_paths": [
+                    "results\\physicomimetics\\DroneAgent\\DroneAgent-13999948.pt"
+                ]
+            },
+            {
+                "steps": 14055510,
+                "file_path": "results\\physicomimetics\\DroneAgent\\DroneAgent-14055510.onnx",
+                "reward": null,
+                "creation_time": 1724905579.063532,
+                "auxillary_file_paths": [
+                    "results\\physicomimetics\\DroneAgent\\DroneAgent-14055510.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 14055510,
+            "file_path": "results\\physicomimetics\\DroneAgent.onnx",
+            "reward": null,
+            "creation_time": 1724905579.063532,
+            "auxillary_file_paths": [
+                "results\\physicomimetics\\DroneAgent\\DroneAgent-14055510.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "1.0.0",
+        "torch_version": "2.2.2+cu121"
+    }
+}

@@ -570,8 +570,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 56
-    NumStackedVectorObservations: 1
+    VectorObservationSize: 36
+    NumStackedVectorObservations: 5
     m_ActionSpec:
       m_NumContinuousActions: 2
       BranchSizes: 
@@ -579,7 +579,7 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 1
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 0}
+  m_Model: {fileID: 5022602860645237092, guid: 24cb7b6d4f32d5141b3fa279027049d3, type: 3}
   m_InferenceDevice: 1
   m_BehaviorType: 0
   m_BehaviorName: DroneAgent

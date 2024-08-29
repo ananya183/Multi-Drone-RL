@@ -170,9 +170,11 @@ MonoBehaviour:
   maxForce: 10
   maxSpeed: 5
   maxAngularSpeed: 3
-  numberDrones: 15
+  numberDrones: 5
   maxNumberDrones: 15
   numActionsInEpisode: 6000
+  trainingAreaSize: 40
+  numberRays: 12
   currentEpisode: 0
   leaderDroneMultiplier: 0.2
   numWaypoints: 0

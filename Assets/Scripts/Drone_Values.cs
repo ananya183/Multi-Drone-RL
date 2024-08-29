@@ -13,7 +13,10 @@ public class Drone_Values : MonoBehaviour
 
     [Header("Epsiode Values")]
     [SerializeField] int numActionsInEpisode;
+    [SerializeField] float trainingAreaSize;
+    [SerializeField] int numberRays;
     [SerializeField] int currentEpisode;
+ 
 
     [Header("Leader Drone Values")]
     [SerializeField] float leaderDroneMultiplier;
@@ -34,6 +37,8 @@ public class Drone_Values : MonoBehaviour
     public static int MaxNumberDrones;
 
     public static int NumActionsInEpisode;
+    public static float TrainingAreaSize;
+    public static int NumberRays;
     public static int CurrentEpisode;
 
     public static float LeaderDroneMultiplier;
@@ -55,6 +60,8 @@ public class Drone_Values : MonoBehaviour
         MaxNumberDrones = maxNumberDrones;
 
         NumActionsInEpisode = numActionsInEpisode;
+        TrainingAreaSize = trainingAreaSize;
+        NumberRays = numberRays;
 
         UserControlledOrAutomated = userControlledOrAutomated;
         LeaderDroneMultiplier = leaderDroneMultiplier;

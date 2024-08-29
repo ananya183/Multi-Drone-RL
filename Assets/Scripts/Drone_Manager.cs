@@ -1,36 +1,102 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.MLAgents;
+using Unity.MLAgents.Policies;
 
 public class Drone_Manager : MonoBehaviour
 {
     public GameObject FollowerPrefab;
     public List<GameObject> drones;
+    public bool EpisodeEnded;
+
+    int currentAction = 0;
 
     private void Start()
     {
-        List<Vector3> spawnPos = new List<Vector3>();
+        InitializeDrones();
+    }
 
-        Vector3 center = GetRandomPosition();
-        for (int i = 0; i < Drone_Values.NumberDrones; i++)
-        {
-            spawnPos.Add(PlaceOnCircle(center, Drone_Values.R_sense, spawnPos));
-        }
-
+    private void InstantiateDrones()
+    {
         for (int i = 0; i < Drone_Values.NumberDrones; i++)
         {
             GameObject followerDrone = Instantiate(FollowerPrefab, this.transform.parent);
-            drones.Add(followerDrone);
             followerDrone.GetComponent<Drone_Agent>().drone_Manager = this;
-            followerDrone = ResetDrone(followerDrone);
-            followerDrone.transform.localPosition = spawnPos[i];
+            drones.Add(followerDrone);
         }
     }
 
-    Vector3 GetRandomPosition()
+    public void startEpisodeForAllDrones()
+    {
+        foreach (var drone in drones)
+        {
+            var agent = drone.GetComponent<Drone_Agent>();
+            if (agent != null)
+            {
+                agent.OnEpisodeBegin();
+            }
+        }
+    }
+
+    void OnEpisodeBegins()
+    {
+        EpisodeEnded = false;
+        ReInitializeDrones();
+    }
+
+    public void EndEpisodeForAllDrones()
+    {
+        foreach (var each in drones)
+        {
+            var agent = each.GetComponent<Agent>();
+            if (agent != null)
+            {
+                agent.EndEpisode();
+            }
+        }
+        currentAction= 0;
+        Drone_Values.CurrentEpisode++;
+
+        OnEpisodeBegins();
+    }
+
+    private void SpawnDrones()
+    {
+        List<Vector3> spawnPos = new List<Vector3>();
+        Vector3 center = GetRandomPosition(Drone_Values.TrainingAreaSize);
+        for (int i = 0; i < drones.Count; i++) 
+        {
+            ResetDrone(drones[i]);
+            spawnPos.Add(PlaceOnCircle(center, Drone_Values.R_sense, spawnPos));
+            drones[i].transform.localPosition = spawnPos[i];
+        }
+    }
+
+    private void InitializeDrones()
+    {
+        InstantiateDrones();
+        SpawnDrones();
+    }
+
+    private void ReInitializeDrones()
+    {
+        SpawnDrones();
+        startEpisodeForAllDrones();
+    }
+
+    private void FixedUpdate()
+    {
+        if (currentAction > Drone_Values.NumActionsInEpisode)
+            EpisodeEnded = true;
+        if (EpisodeEnded)
+            EndEpisodeForAllDrones();
+    }
+
+    Vector3 GetRandomPosition(float size)
     {
         // Return a random position within the simulation environment
-        return new Vector3(Random.Range(-40f, 40f), 1.0f, Random.Range(-40.0f, 40.0f));
+        return new Vector3(Random.Range(-size, size), 1.0f, Random.Range(-size, size));
     }
 
     Vector3 PlaceOnCircle(Vector3 center, float radius, List<Vector3> already, float threshold = 5f)
@@ -55,7 +121,7 @@ public class Drone_Manager : MonoBehaviour
 
     public GameObject ResetDrone(GameObject drone)
     {
-        drone.transform.localPosition = GetRandomPosition();
+        drone.transform.localPosition = GetRandomPosition(Drone_Values.TrainingAreaSize);
         drone.transform.localRotation = Quaternion.identity;
         
         var rBody = drone.GetComponent<Rigidbody>();
