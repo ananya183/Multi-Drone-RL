@@ -570,7 +570,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 36
+    VectorObservationSize: 174
     NumStackedVectorObservations: 5
     m_ActionSpec:
       m_NumContinuousActions: 2
@@ -604,6 +604,9 @@ MonoBehaviour:
   hasUpgradedFromAgentParameters: 1
   MaxStep: 0
   drone_Manager: {fileID: 0}
+  sensedObjectsDistance: []
+  sensedObjectsAngle: 
+  force: {x: 0, y: 0, z: 0}
 --- !u!1 &5746642042973565278
 GameObject:
   m_ObjectHideFlags: 0

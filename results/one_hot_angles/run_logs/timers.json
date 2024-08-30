@@ -1,0 +1,42 @@
+{
+    "name": "root",
+    "metadata": {
+        "timer_format_version": "0.1.0",
+        "start_time_seconds": "1724942893",
+        "python_version": "3.10.2 (tags/v3.10.2:a58ebcc, Jan 17 2022, 14:12:15) [MSC v.1929 64 bit (AMD64)]",
+        "command_line_arguments": "E:\\Python_Venvs\\mlagents-venv\\Scripts\\mlagents-learn .\\config\\drone_config.yaml --run-id=one_hot_angles --force",
+        "mlagents_version": "1.0.0",
+        "mlagents_envs_version": "1.0.0",
+        "communication_protocol_version": "1.5.0",
+        "pytorch_version": "2.2.2+cu121",
+        "numpy_version": "1.21.2",
+        "end_time_seconds": "1724942911"
+    },
+    "total": 17.819485400017584,
+    "count": 1,
+    "self": 0.0040055000281427056,
+    "children": {
+        "run_training.setup": {
+            "total": 0.0895705999864731,
+            "count": 1,
+            "self": 0.0895705999864731
+        },
+        "TrainerController.start_learning": {
+            "total": 17.725909300002968,
+            "count": 1,
+            "self": 7.460001506842673e-05,
+            "children": {
+                "TrainerController._reset_env": {
+                    "total": 17.72581929998705,
+                    "count": 1,
+                    "self": 17.72581929998705
+                },
+                "TrainerController._save_models": {
+                    "total": 1.5400000847876072e-05,
+                    "count": 1,
+                    "self": 1.5400000847876072e-05
+                }
+            }
+        }
+    }
+}

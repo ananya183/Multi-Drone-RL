@@ -1941,7 +1941,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &6500593341089745574
 Transform:
   m_ObjectHideFlags: 0
@@ -2333,7 +2333,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   FollowerPrefab: {fileID: 5549455562311884032, guid: 393a71c7b99e1684595a817e6296208e, type: 3}
+  LeaderPrefab: {fileID: 5549455562311884032, guid: 0e16c82f70095bd4ebab4c8b7bb1836c, type: 3}
   drones: []
+  LeaderDrone: {fileID: 0}
+  EpisodeEnded: 0
+  currentAction: 0
 --- !u!1 &8785611666304294906
 GameObject:
   m_ObjectHideFlags: 0

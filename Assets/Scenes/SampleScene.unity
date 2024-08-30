@@ -170,9 +170,9 @@ MonoBehaviour:
   maxForce: 10
   maxSpeed: 5
   maxAngularSpeed: 3
-  numberDrones: 5
-  maxNumberDrones: 15
-  numActionsInEpisode: 6000
+  numberDrones: 7
+  maxNumberDrones: 7
+  numActionsInEpisode: 5000
   trainingAreaSize: 40
   numberRays: 12
   currentEpisode: 0
@@ -905,16 +905,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7932634253677234007, guid: 6fd2a3c417a390c4eb3704de72905e44, type: 3}
-      propertyPath: numberOfDrones
-      value: 15
-      objectReference: {fileID: 0}
     - target: {fileID: 9207272894885708388, guid: 6fd2a3c417a390c4eb3704de72905e44, type: 3}
       propertyPath: m_Name
       value: TrainingArea
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 7932634253677234007, guid: 6fd2a3c417a390c4eb3704de72905e44, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

@@ -457,7 +457,6 @@ GameObject:
   - component: {fileID: 4624179986562834306}
   - component: {fileID: 437805421395785461}
   - component: {fileID: 1279435751898222592}
-  - component: {fileID: 3609174299484074808}
   m_Layer: 6
   m_Name: LeaderDrone
   m_TagString: Drone
@@ -541,36 +540,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6c10235b38402047a18f361a6bc1357, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &3609174299484074808
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5549455562311884032}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d1c4e0b1822b495aa52bc52839ecb30, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_BrainParameters:
-    VectorObservationSize: 50
-    NumStackedVectorObservations: 5
-    m_ActionSpec:
-      m_NumContinuousActions: 2
-      BranchSizes: 
-    VectorActionSize: 02000000
-    VectorActionDescriptions: []
-    VectorActionSpaceType: 1
-    hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 5022602860645237092, guid: 24cb7b6d4f32d5141b3fa279027049d3, type: 3}
-  m_InferenceDevice: 1
-  m_BehaviorType: 0
-  m_BehaviorName: DroneAgent
-  TeamId: 0
-  m_UseChildSensors: 1
-  m_UseChildActuators: 1
-  m_ObservableAttributeHandling: 0
 --- !u!1 &5746642042973565278
 GameObject:
   m_ObjectHideFlags: 0

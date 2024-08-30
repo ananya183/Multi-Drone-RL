@@ -7,10 +7,12 @@ using Unity.MLAgents.Policies;
 public class Drone_Manager : MonoBehaviour
 {
     public GameObject FollowerPrefab;
+    public GameObject LeaderPrefab;
     public List<GameObject> drones;
+    public GameObject LeaderDrone;
     public bool EpisodeEnded;
 
-    int currentAction = 0;
+    public int currentAction = 0;
 
     private void Start()
     {
@@ -19,7 +21,9 @@ public class Drone_Manager : MonoBehaviour
 
     private void InstantiateDrones()
     {
-        for (int i = 0; i < Drone_Values.NumberDrones; i++)
+        LeaderDrone = Instantiate(LeaderPrefab, this.transform.parent);
+        drones.Add( LeaderDrone);
+        for (int i = 0; i < Drone_Values.NumberDrones - 1; i++)
         {
             GameObject followerDrone = Instantiate(FollowerPrefab, this.transform.parent);
             followerDrone.GetComponent<Drone_Agent>().drone_Manager = this;
@@ -31,6 +35,7 @@ public class Drone_Manager : MonoBehaviour
     {
         foreach (var drone in drones)
         {
+            drone.SetActive(true);
             var agent = drone.GetComponent<Drone_Agent>();
             if (agent != null)
             {
@@ -65,11 +70,13 @@ public class Drone_Manager : MonoBehaviour
     {
         List<Vector3> spawnPos = new List<Vector3>();
         Vector3 center = GetRandomPosition(Drone_Values.TrainingAreaSize);
-        for (int i = 0; i < drones.Count; i++) 
+        int i = 0;
+        while (i < drones.Count) 
         {
             ResetDrone(drones[i]);
             spawnPos.Add(PlaceOnCircle(center, Drone_Values.R_sense, spawnPos));
             drones[i].transform.localPosition = spawnPos[i];
+            i++;
         }
     }
 
@@ -90,7 +97,10 @@ public class Drone_Manager : MonoBehaviour
         if (currentAction > Drone_Values.NumActionsInEpisode)
             EpisodeEnded = true;
         if (EpisodeEnded)
+        {
             EndEpisodeForAllDrones();
+        }
+        currentAction++;
     }
 
     Vector3 GetRandomPosition(float size)
