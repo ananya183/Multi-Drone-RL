@@ -579,9 +579,9 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 1
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 5022602860645237092, guid: 24cb7b6d4f32d5141b3fa279027049d3, type: 3}
+  m_Model: {fileID: 0}
   m_InferenceDevice: 1
-  m_BehaviorType: 0
+  m_BehaviorType: 1
   m_BehaviorName: DroneAgent
   TeamId: 0
   m_UseChildSensors: 1
@@ -604,8 +604,7 @@ MonoBehaviour:
   hasUpgradedFromAgentParameters: 1
   MaxStep: 0
   drone_Manager: {fileID: 0}
-  sensedObjectsDistance: []
-  sensedObjectsAngle: 
+  sensedObjectsPos: []
   force: {x: 0, y: 0, z: 0}
 --- !u!1 &5746642042973565278
 GameObject:
