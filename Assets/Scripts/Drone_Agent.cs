@@ -15,7 +15,11 @@ public class Drone_Agent : Agent
     public HashSet<GameObject> sensedDrones = new HashSet<GameObject>();
     public List<Vector2> sensedObjectsPos;
 
-    [SerializeField] private Vector3 force;
+    private int totalSensed;
+    private int prevSensed;
+    private int currentSensed;
+
+    // [SerializeField] private Vector3 force;
     private System.Random random = new System.Random();
     private void Awake()
     {
@@ -30,55 +34,39 @@ public class Drone_Agent : Agent
 
     public override void OnEpisodeBegin()
     {
+        totalSensed = 0;
+        prevSensed = 0;
+        currentSensed = 0;
         sensedDrones.Clear();
     }
 
     public override void CollectObservations(VectorSensor sensor)
     {
+
+        // sensor.AddOneHotObservation(sensedDrones.Count, Drone_Values.NumberDrones - 1);
+        prevSensed = sensedDrones.Count;
         sensedDrones = SenseDrones();
+        currentSensed = sensedDrones.Count;
+
+        if (currentSensed > totalSensed)
+            totalSensed = currentSensed;
+
+        // sensor.AddOneHotObservation(sensedDrones.Count, Drone_Values.NumberDrones - 1);
         sensedObjectsPos = SenseObjects();
 
-        sensor.AddObservation(Vector3to2(transform.localPosition));
         sensor.AddObservation(Vector3to2(rBody.velocity));
 
-        //sensor.AddObservation(sensedDrones.Count);
         // Drone Location Input
 
         AddDroneObservationsRandomly(sensor);
 
-        // Drone Angle Input
-        //foreach (var drone in sensedDrones)
-        //{
-        //    float signedAngle = Vector3.SignedAngle(transform.localPosition, drone.transform.localPosition, transform.forward);
-        //    int angle = (int)signedAngle;
-        //    if (signedAngle < 0)
-        //    {
-        //        angle = (int)signedAngle + 360;
-        //    }
-        //    sensor.AddObservation(angle);
-        //}
-
-        //for (int i = 0; i < Drone_Values.NumberDrones - sensedDrones.Count; i++)
-        //{
-        //    sensor.AddObservation(1);
-        //}
-
-        //sensor.AddObservation(sensedObjectsDistance.Count);
-        
         // Obstacle Input
         for (int i = 0; i < Drone_Values.NumberRays; i++)
         {
-            foreach (var objectPos in sensedObjectsPos)
-            {
-                sensor.AddObservation(objectPos);
-            }
+            sensor.AddObservation(sensedObjectsPos[i] / Drone_Values.R_sense);
         }
 
-        //// Obstacle Angle Input
-        //for (int i = 0; i < Drone_Values.NumberRays; i++)
-        //{
-        //    sensor.AddOneHotObservation(sensedObjectsAngle[i], Drone_Values.NumberRays);
-        //}
+        sensor.AddObservation(new int[]{totalSensed, prevSensed, currentSensed});
     }
 
     public override void OnActionReceived(ActionBuffers actions)
@@ -91,7 +79,6 @@ public class Drone_Agent : Agent
         controlSignal.z = action[1] * Drone_Values.MaxForce;
         
         Vector3 forceToApply = Vector3.ClampMagnitude(controlSignal, Drone_Values.MaxForce);
-        force = forceToApply;
         Debug.DrawRay(transform.position, forceToApply, Color.green);
         rBody.AddForce(forceToApply);
 
@@ -127,7 +114,7 @@ public class Drone_Agent : Agent
         // Fill the dictionary with Vector2.positiveInfinity for all slots
         for (int i = 0; i < totalSlots; i++)
         {
-            observationSlots[i] = Vector2.positiveInfinity;
+            observationSlots[i] = Vector2.zero;
         }
 
         // Randomly assign sensed drone observations
@@ -137,10 +124,10 @@ public class Drone_Agent : Agent
             do
             {
                 index = random.Next(totalSlots);
-            } while (observationSlots[index] != Vector2.positiveInfinity);
+            } while (observationSlots[index] != Vector2.zero);
 
             Vector3 droneRel = drone.transform.localPosition - this.transform.localPosition;
-            observationSlots[index] = Vector3to2(droneRel);
+            observationSlots[index] = Vector3to2(droneRel / Drone_Values.R_sense); // Normalising
         }
 
         // Add observations to the sensor in order
@@ -155,15 +142,20 @@ public class Drone_Agent : Agent
         float netReward = 0;
         float droneProximityReward = AddDroneProximityReward();        
         netReward +=  droneProximityReward;
-        float obstacleProximityReward = AddObstacleProximityReward();
-        netReward += obstacleProximityReward;
+
+        if (currentSensed < totalSensed)
+            netReward += -0.1f;
+        else if (currentSensed > prevSensed)
+            netReward += 0.05f;;
+        // float obstacleProximityReward = AddObstacleProximityReward();
+        // netReward += obstacleProximityReward;
         //if (sensedDrones.Count + sensedObjectsDistance.Count > 0)
         //{
         //    netReward = netReward/ (sensedDrones.Count + sensedObjectsDistance.Count);
         //}
         //float lostReward = AddLostReward();
         //netReward += lostReward;
-        Debug.Log($"drone:{droneProximityReward} obstacle:{obstacleProximityReward} Net:{netReward}");
+        Debug.Log($"drone:{droneProximityReward} Net:{netReward}");
         AddReward(netReward);
     }
 
@@ -174,20 +166,7 @@ public class Drone_Agent : Agent
         float netReward = 0;
         foreach (var drone in sensedDrones)
         {
-            float distance = Vector3.Distance(transform.localPosition, drone.transform.localPosition) / Drone_Values.R_sense;
-            var currentReward = 0f;
-
-            var ratio = Drone_Values.R_out / Drone_Values.R_sense;
-
-            if (distance > ratio)
-            {
-                currentReward = 1 - distance;
-            }
-            else
-            {
-                currentReward = (1f/ratio) * (-ratio + distance);
-            }
-            netReward += currentReward;
+            netReward += 1;
         }
         return netReward;
     }

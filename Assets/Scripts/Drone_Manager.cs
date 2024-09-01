@@ -76,6 +76,8 @@ public class Drone_Manager : MonoBehaviour
             ResetDrone(drones[i]);
             spawnPos.Add(PlaceOnCircle(center, Drone_Values.R_sense, spawnPos));
             drones[i].transform.localPosition = spawnPos[i];
+            float angle = Random.Range(0, 360);
+            drones[i].transform.localRotation = Quaternion.Euler(0, angle ,0);
             i++;
         }
     }
@@ -131,7 +133,7 @@ public class Drone_Manager : MonoBehaviour
 
     public GameObject ResetDrone(GameObject drone)
     {
-        drone.transform.localPosition = GetRandomPosition(Drone_Values.TrainingAreaSize);
+        drone.transform.localPosition = Vector3.zero;
         drone.transform.localRotation = Quaternion.identity;
         
         var rBody = drone.GetComponent<Rigidbody>();

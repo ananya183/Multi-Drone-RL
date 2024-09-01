@@ -25,9 +25,9 @@ public class Drone_Values : MonoBehaviour
 
     [Header("Follower Drone Values")]
     [SerializeField] float r_sense;     // sensingZoneRadius
-    [SerializeField] float r_out;       // goodRegionOuterRadius
-    [SerializeField] float r_in;        // goodRegionInnerRadius, also, Bad Region Outer Radius
-    [SerializeField] float r_tooclose;
+    // [SerializeField] float r_out;       // goodRegionOuterRadius
+    // [SerializeField] float r_in;        // goodRegionInnerRadius, also, Bad Region Outer Radius
+    // [SerializeField] float r_tooclose;
 
 
     public static float MaxForce;
@@ -46,9 +46,9 @@ public class Drone_Values : MonoBehaviour
     public static bool UserControlledOrAutomated;
 
     public static float R_sense;
-    public static float R_out;
-    public static float R_in;
-    public static float R_tooclose;
+    // public static float R_out;
+    // public static float R_in;
+    // public static float R_tooclose;
 
 
     private void Awake()
@@ -68,9 +68,9 @@ public class Drone_Values : MonoBehaviour
         NumWaypoints = numWaypoints;
 
         R_sense = r_sense;
-        R_out = r_out;
-        R_in = r_in;
-        R_tooclose = r_tooclose;
+        // R_out = r_out;
+        // R_in = r_in;
+        // R_tooclose = r_tooclose;
         CurrentEpisode = currentEpisode;
     }
 
