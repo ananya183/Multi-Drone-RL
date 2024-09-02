@@ -73,7 +73,7 @@ public class Drone_Manager : MonoBehaviour
     private void SpawnDrones()
     {
         List<Vector3> spawnPos = new List<Vector3>();
-        Vector3 center = GetRandomPosition(Drone_Values.TrainingAreaSize);
+        Vector3 center = GetRandomPosition(Drone_Values.TrainingAreaSize - Drone_Values.R_spawn - 5f);
         int i = 0;
         while (i < drones.Count) 
         {
@@ -112,7 +112,7 @@ public class Drone_Manager : MonoBehaviour
     Vector3 GetRandomPosition(float size)
     {
         // Return a random position within the simulation environment
-        return new Vector3(Random.Range(-size, size), 1.0f, Random.Range(-size, size));
+        return new Vector3(Random.Range(-size, size), Drone_Values.DroneHeight, Random.Range(-size, size));
     }
 
     Vector3 PlaceOnCircle(Vector3 center, float radius, List<Vector3> already, float threshold = 5f)

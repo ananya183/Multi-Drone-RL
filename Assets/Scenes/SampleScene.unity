@@ -172,15 +172,17 @@ MonoBehaviour:
   maxAngularSpeed: 3
   numberDrones: 2
   maxNumberDrones: 2
+  droneHeight: 1
   numActionsInEpisode: 5000
-  trainingAreaSize: 40
+  trainingAreaSize: 50
   numberRays: 12
   currentEpisode: 0
   leaderDroneMultiplier: 0.2
-  numWaypoints: 1
+  numWaypoints: 2
   userControlledOrAutomated: 0
-  r_sense: 15
+  r_sense: 100
   r_spawn: 5
+  r_out: 10
 --- !u!1001 &162119782
 PrefabInstance:
   m_ObjectHideFlags: 0

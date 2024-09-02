@@ -66,7 +66,8 @@ public class Leader_Drone : MonoBehaviour
         List<Vector3> waypoints = new List<Vector3>();
         for (int i = 0; i < numWayPoints; i++)
         {
-            Vector3 waypoint = new Vector3(parent.position.x + Random.Range(-45f, 45f), 1f, parent.position.z + Random.Range(-45f, 45f));
+            float minMaxValue = Drone_Values.TrainingAreaSize - Drone_Values.R_spawn;
+            Vector3 waypoint = new Vector3(parent.position.x + Random.Range(-minMaxValue, minMaxValue), Drone_Values.DroneHeight, parent.position.z + Random.Range(-minMaxValue, minMaxValue));
             waypoints.Add(waypoint);
         }
         return waypoints;
