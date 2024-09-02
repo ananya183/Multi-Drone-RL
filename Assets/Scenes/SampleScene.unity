@@ -177,9 +177,10 @@ MonoBehaviour:
   numberRays: 12
   currentEpisode: 0
   leaderDroneMultiplier: 0.2
-  numWaypoints: 0
+  numWaypoints: 1
   userControlledOrAutomated: 0
   r_sense: 15
+  r_spawn: 5
 --- !u!1001 &162119782
 PrefabInstance:
   m_ObjectHideFlags: 0

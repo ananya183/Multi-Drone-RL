@@ -168,7 +168,7 @@ public class Drone_Agent : Agent
         //}
         //float lostReward = AddLostReward();
         //netReward += lostReward;
-        Debug.Log($"drone:{droneProximityReward} Net:{netReward}");
+        //Debug.Log($"drone:{droneProximityReward} Net:{netReward}");
         SetReward(netReward);
     }
 

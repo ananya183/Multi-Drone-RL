@@ -22,7 +22,8 @@ public class Drone_Manager : MonoBehaviour
     private void InstantiateDrones()
     {
         LeaderDrone = Instantiate(LeaderPrefab, this.transform.parent);
-        drones.Add( LeaderDrone);
+        LeaderDrone.GetComponent<Leader_Drone>().drone_manager = this;
+        drones.Add(LeaderDrone);
         for (int i = 0; i < Drone_Values.NumberDrones - 1; i++)
         {
             GameObject followerDrone = Instantiate(FollowerPrefab, this.transform.parent);
@@ -41,6 +42,9 @@ public class Drone_Manager : MonoBehaviour
             {
                 agent.OnEpisodeBegin();
             }
+            var leader_agent = drone.GetComponent<Leader_Drone>();
+            if (leader_agent != null)
+                leader_agent.OnEpisodeBegins();
         }
     }
 
@@ -74,7 +78,7 @@ public class Drone_Manager : MonoBehaviour
         while (i < drones.Count) 
         {
             ResetDrone(drones[i]);
-            spawnPos.Add(PlaceOnCircle(center, Drone_Values.R_sense, spawnPos));
+            spawnPos.Add(PlaceOnCircle(center, Drone_Values.R_spawn, spawnPos));
             drones[i].transform.localPosition = spawnPos[i];
             float angle = Random.Range(0, 360);
             drones[i].transform.localRotation = Quaternion.Euler(0, angle ,0);
@@ -96,8 +100,8 @@ public class Drone_Manager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (currentAction > Drone_Values.NumActionsInEpisode)
-            EpisodeEnded = true;
+        //if (currentAction > Drone_Values.NumActionsInEpisode)
+        //    EpisodeEnded = true;
         if (EpisodeEnded)
         {
             EndEpisodeForAllDrones();
