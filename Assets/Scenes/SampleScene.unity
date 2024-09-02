@@ -167,11 +167,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0877d2bcaed128e42bffca53f2e4180f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxForce: 10
+  maxForce: 50
   maxSpeed: 5
   maxAngularSpeed: 3
-  numberDrones: 7
-  maxNumberDrones: 7
+  numberDrones: 2
+  maxNumberDrones: 2
   numActionsInEpisode: 5000
   trainingAreaSize: 40
   numberRays: 12
@@ -180,9 +180,6 @@ MonoBehaviour:
   numWaypoints: 0
   userControlledOrAutomated: 0
   r_sense: 15
-  r_out: 7
-  r_in: 3
-  r_tooclose: 2
 --- !u!1001 &162119782
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -234,10 +231,6 @@ PrefabInstance:
     - target: {fileID: 9207272894885708388, guid: 6fd2a3c417a390c4eb3704de72905e44, type: 3}
       propertyPath: m_Name
       value: TrainingArea (8)
-      objectReference: {fileID: 0}
-    - target: {fileID: 9207272894885708388, guid: 6fd2a3c417a390c4eb3704de72905e44, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -296,10 +289,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: TrainingArea (1)
       objectReference: {fileID: 0}
-    - target: {fileID: 9207272894885708388, guid: 6fd2a3c417a390c4eb3704de72905e44, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -356,10 +345,6 @@ PrefabInstance:
     - target: {fileID: 9207272894885708388, guid: 6fd2a3c417a390c4eb3704de72905e44, type: 3}
       propertyPath: m_Name
       value: TrainingArea (4)
-      objectReference: {fileID: 0}
-    - target: {fileID: 9207272894885708388, guid: 6fd2a3c417a390c4eb3704de72905e44, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -512,10 +497,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: TrainingArea (7)
       objectReference: {fileID: 0}
-    - target: {fileID: 9207272894885708388, guid: 6fd2a3c417a390c4eb3704de72905e44, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -665,10 +646,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: TrainingArea (6)
       objectReference: {fileID: 0}
-    - target: {fileID: 9207272894885708388, guid: 6fd2a3c417a390c4eb3704de72905e44, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -725,10 +702,6 @@ PrefabInstance:
     - target: {fileID: 9207272894885708388, guid: 6fd2a3c417a390c4eb3704de72905e44, type: 3}
       propertyPath: m_Name
       value: TrainingArea (2)
-      objectReference: {fileID: 0}
-    - target: {fileID: 9207272894885708388, guid: 6fd2a3c417a390c4eb3704de72905e44, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -787,10 +760,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: TrainingArea (3)
       objectReference: {fileID: 0}
-    - target: {fileID: 9207272894885708388, guid: 6fd2a3c417a390c4eb3704de72905e44, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -848,10 +817,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: TrainingArea (5)
       objectReference: {fileID: 0}
-    - target: {fileID: 9207272894885708388, guid: 6fd2a3c417a390c4eb3704de72905e44, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -903,10 +868,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1273318061427498382, guid: 6fd2a3c417a390c4eb3704de72905e44, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7175064750147351847, guid: 6fd2a3c417a390c4eb3704de72905e44, type: 3}
-      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9207272894885708388, guid: 6fd2a3c417a390c4eb3704de72905e44, type: 3}

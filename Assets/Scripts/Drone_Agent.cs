@@ -54,7 +54,8 @@ public class Drone_Agent : Agent
         // sensor.AddOneHotObservation(sensedDrones.Count, Drone_Values.NumberDrones - 1);
         sensedObjectsPos = SenseObjects();
 
-        sensor.AddObservation(Vector3to2(rBody.velocity));
+        var localVel = transform.InverseTransformDirection(rBody.velocity);
+        sensor.AddObservation(Vector3to2(localVel));
 
         // Drone Location Input
 
@@ -66,7 +67,10 @@ public class Drone_Agent : Agent
             sensor.AddObservation(sensedObjectsPos[i] / Drone_Values.R_sense);
         }
 
-        sensor.AddObservation(new int[]{totalSensed, prevSensed, currentSensed});
+        
+        sensor.AddObservation(currentSensed);
+        sensor.AddObservation(prevSensed);
+        sensor.AddObservation(totalSensed);
     }
 
     public override void OnActionReceived(ActionBuffers actions)
@@ -79,8 +83,10 @@ public class Drone_Agent : Agent
         controlSignal.z = action[1] * Drone_Values.MaxForce;
         
         Vector3 forceToApply = Vector3.ClampMagnitude(controlSignal, Drone_Values.MaxForce);
-        Debug.DrawRay(transform.position, forceToApply, Color.green);
-        rBody.AddForce(forceToApply);
+        
+        var localForce = transform.InverseTransformDirection(forceToApply);
+        Debug.DrawRay(transform.position, localForce, Color.green);
+        rBody.AddForce(localForce);
 
         rBody.velocity = Vector3.ClampMagnitude(rBody.velocity, Drone_Values.MaxSpeed);
 
@@ -91,9 +97,16 @@ public class Drone_Agent : Agent
 
     private void OnCollisionEnter(Collision collision)
     {
-        AddReward(-1 * Drone_Values.NumberDrones);
-        EndEpisode();
-        this.gameObject.SetActive(false);
+        
+        foreach (var drone in drone_Manager.drones)
+        {
+            var agent = drone.GetComponent<Agent>();
+            if (agent != null)
+                agent.SetReward(-1);
+        }
+        drone_Manager.EpisodeEnded = true;
+        //EndEpisode();
+        //this.gameObject.SetActive(false);
     }
 
     
@@ -144,9 +157,9 @@ public class Drone_Agent : Agent
         netReward +=  droneProximityReward;
 
         if (currentSensed < totalSensed)
-            netReward += -0.1f;
-        else if (currentSensed > prevSensed)
-            netReward += 0.05f;;
+            netReward += (totalSensed - currentSensed) * (-0.0001f);
+        if (currentSensed > prevSensed)
+            netReward += 0.01f;
         // float obstacleProximityReward = AddObstacleProximityReward();
         // netReward += obstacleProximityReward;
         //if (sensedDrones.Count + sensedObjectsDistance.Count > 0)
@@ -156,7 +169,7 @@ public class Drone_Agent : Agent
         //float lostReward = AddLostReward();
         //netReward += lostReward;
         Debug.Log($"drone:{droneProximityReward} Net:{netReward}");
-        AddReward(netReward);
+        SetReward(netReward);
     }
 
     // Survival Reward
@@ -176,15 +189,15 @@ public class Drone_Agent : Agent
         float netReward = 0;
         foreach (var objectPos in sensedObjectsPos)
         {
-            var distance = Vector3.Distance(transform.localPosition, objectPos) / Drone_Values.R_sense;
-            var ratio = Drone_Values.R_out / Drone_Values.R_sense;
-            if (distance < ratio)
-            {
-                netReward += (1f / ratio) * (-ratio + distance);
-                //float e = math.E;
-                //float e2 = e * e;
-                //netReward += Mathf.Pow(e, -e2 * distance);
-            }
+            //var distance = Vector3.Distance(transform.localPosition, objectPos) / Drone_Values.R_sense;
+            //var ratio = Drone_Values.R_out / Drone_Values.R_sense;
+            //if (distance < ratio)
+            //{
+            //    netReward += (1f / ratio) * (-ratio + distance);
+            //    //float e = math.E;
+            //    //float e2 = e * e;
+            //    //netReward += Mathf.Pow(e, -e2 * distance);
+            //}
         }
         return netReward;
     }
