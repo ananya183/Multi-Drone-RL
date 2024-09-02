@@ -15,6 +15,8 @@ public class Drone_Agent : Agent
     public HashSet<GameObject> sensedDrones = new HashSet<GameObject>();
     public List<Vector2> sensedObjectsPos;
 
+    [SerializeField] float TotalReward;
+
     //private int totalSensed;
     //private int prevSensed;
     //private int currentSensed;
@@ -38,11 +40,11 @@ public class Drone_Agent : Agent
         //prevSensed = 0;
         //currentSensed = 0;
         sensedDrones.Clear();
+        TotalReward = 0;
     }
 
     public override void CollectObservations(VectorSensor sensor)
     {
-
         // sensor.AddOneHotObservation(sensedDrones.Count, Drone_Values.NumberDrones - 1);
         //prevSensed = sensedDrones.Count;
         sensedDrones = SenseDrones();
@@ -69,28 +71,32 @@ public class Drone_Agent : Agent
         //sensor.AddObservation(currentSensed);
         //sensor.AddObservation(prevSensed);
         //sensor.AddObservation(totalSensed);
+        
     }
 
     public override void OnActionReceived(ActionBuffers actions)
     {
-        var action = actions.ContinuousActions;
+        if (drone_Manager.currentAction > 0)
+        {
+            var action = actions.ContinuousActions;
 
-        Vector3 controlSignal = Vector3.zero;
+            Vector3 controlSignal = Vector3.zero;
 
-        controlSignal.x = action[0];
-        controlSignal.z = action[1];
-        
-        Vector3 forceToApply = Vector3.ClampMagnitude(controlSignal * Drone_Values.MaxForce, Drone_Values.MaxForce);
-        
-        var localForce = transform.InverseTransformDirection(forceToApply);
-        Debug.DrawLine(transform.position, transform.position + localForce, Color.green);
-        rBody.AddForce(localForce);
+            controlSignal.x = action[0];
+            controlSignal.z = action[1];
 
-        rBody.velocity = Vector3.ClampMagnitude(rBody.velocity, Drone_Values.MaxSpeed);
+            Vector3 forceToApply = Vector3.ClampMagnitude(controlSignal * Drone_Values.MaxForce, Drone_Values.MaxForce);
 
-        //Debug.Log($"Cumulative Reward before Physicomimetics: {GetCumulativeReward()}");
-        AddNetReward();
-        //Debug.Log($"Cumulative Reward After Physicomimetics: {GetCumulativeReward()}");
+            var localForce = transform.InverseTransformDirection(forceToApply);
+            Debug.DrawLine(transform.position, transform.position + localForce, Color.green);
+            rBody.AddForce(localForce);
+
+            rBody.velocity = Vector3.ClampMagnitude(rBody.velocity, Drone_Values.MaxSpeed);
+
+            //Debug.Log($"Cumulative Reward before Physicomimetics: {GetCumulativeReward()}");
+            AddNetReward();
+            //Debug.Log($"Cumulative Reward After Physicomimetics: {GetCumulativeReward()}");
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -136,7 +142,7 @@ public class Drone_Agent : Agent
                 index = random.Next(totalSlots);
             } while (observationSlots[index] != Vector2.zero);
 
-            Vector3 droneRel = drone.transform.localPosition - this.transform.localPosition;
+            Vector3 droneRel = transform.InverseTransformPoint(drone.transform.position);
             observationSlots[index] = Vector3to2(droneRel / Drone_Values.R_sense); // Normalising
         }
 
@@ -150,9 +156,10 @@ public class Drone_Agent : Agent
     private void AddNetReward()
     {
         float netReward = 0;
-        float droneProximityReward = AddDroneProximityReward();        
-        netReward +=  droneProximityReward;
-
+        float droneProximityReward = AddDroneProximityReward();  
+        netReward += droneProximityReward;
+        float survivalReward = AddSurvivalReward();
+        netReward += survivalReward;
         //if (currentSensed < totalSensed)
         //    netReward += (totalSensed - currentSensed) * (-0.0001f);
         //if (currentSensed > prevSensed)
@@ -165,8 +172,9 @@ public class Drone_Agent : Agent
         //}
         //float lostReward = AddLostReward();
         //netReward += lostReward;
-        //Debug.Log($"drone:{droneProximityReward} Net:{netReward}");
+        Debug.Log($"drone:{droneProximityReward} survival:{survivalReward} Net:{netReward}");
         AddReward(netReward);
+        TotalReward += netReward;
     }
 
     // Survival Reward
@@ -184,6 +192,11 @@ public class Drone_Agent : Agent
             }
         }
         return netReward;
+    }
+
+    private float AddSurvivalReward()
+    {
+        return 0.01f;
     }
 
     private float AddObstacleProximityReward()

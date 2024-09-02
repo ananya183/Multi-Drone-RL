@@ -26,38 +26,38 @@ public class Leader_Drone : MonoBehaviour
     {
 
         // Force
-        Vector3 direction = (Waypoints[currentWaypoint] - transform.position).normalized;
-        rb.AddForce(direction * Drone_Values.MaxForce * Drone_Values.LeaderDroneMultiplier);
+        //Vector3 direction = (Waypoints[currentWaypoint] - transform.position).normalized;
+        //rb.AddForce(direction * Drone_Values.MaxForce * Drone_Values.LeaderDroneMultiplier);
 
-        rb.velocity = Vector3.ClampMagnitude(rb.velocity, Drone_Values.MaxSpeed);
+        //rb.velocity = Vector3.ClampMagnitude(rb.velocity, Drone_Values.MaxSpeed);
 
-        // Increase Waypoint count
-        if (Vector3.Distance(transform.position, Waypoints[currentWaypoint]) < threshold)
-        {
-            currentWaypoint++;
-        }
+        //// Increase Waypoint count
+        //if (Vector3.Distance(transform.position, Waypoints[currentWaypoint]) < threshold)
+        //{
+        //    currentWaypoint++;
+        //}
 
 
-        // End Episode
-        if (currentWaypoint >= Drone_Values.NumWaypoints)
-        {
-            currentWaypoint = 0;
-            drone_manager.EpisodeEnded = true;
-        }
+        //// End Episode
+        //if (currentWaypoint >= Drone_Values.NumWaypoints)
+        //{
+        //    currentWaypoint = 0;
+        //    drone_manager.EpisodeEnded = true;
+        //}
 
 
         // Draw rays
         // 1. From the current position to the next waypoint
-        if (currentWaypoint < Waypoints.Count)
-        {
-            Debug.DrawRay(transform.position, Waypoints[currentWaypoint] - transform.position, Color.green);
+        //if (currentWaypoint < Waypoints.Count)
+        //{
+        //    Debug.DrawRay(transform.position, Waypoints[currentWaypoint] - transform.position, Color.green);
 
-            // 2. Between all remaining waypoints
-            for (int i = currentWaypoint; i < Waypoints.Count - 1; i++)
-            {
-                Debug.DrawRay(Waypoints[i], Waypoints[i + 1] - Waypoints[i], Color.white);
-            }
-        }
+        //    // 2. Between all remaining waypoints
+        //    for (int i = currentWaypoint; i < Waypoints.Count - 1; i++)
+        //    {
+        //        Debug.DrawRay(Waypoints[i], Waypoints[i + 1] - Waypoints[i], Color.white);
+        //    }
+        //}
 
     }
 

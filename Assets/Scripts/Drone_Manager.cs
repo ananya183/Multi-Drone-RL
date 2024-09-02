@@ -30,9 +30,14 @@ public class Drone_Manager : MonoBehaviour
             followerDrone.GetComponent<Drone_Agent>().drone_Manager = this;
             drones.Add(followerDrone);
         }
+
+        foreach (GameObject drone in drones)
+        {
+            drone.SetActive(false);
+        }
     }
 
-    public void startEpisodeForAllDrones()
+    public void StartEpisodeForAllDrones()
     {
         foreach (var drone in drones)
         {
@@ -44,8 +49,12 @@ public class Drone_Manager : MonoBehaviour
             }
             var leader_agent = drone.GetComponent<Leader_Drone>();
             if (leader_agent != null)
+            {
                 leader_agent.OnEpisodeBegins();
+            }
+                
         }
+
     }
 
     void OnEpisodeBegins()
@@ -63,6 +72,7 @@ public class Drone_Manager : MonoBehaviour
             {
                 agent.EndEpisode();
             }
+            each.SetActive(false);
         }
         currentAction= 0;
         Drone_Values.CurrentEpisode++;
@@ -89,19 +99,19 @@ public class Drone_Manager : MonoBehaviour
     private void InitializeDrones()
     {
         InstantiateDrones();
-        SpawnDrones();
+        OnEpisodeBegins();
     }
 
     private void ReInitializeDrones()
     {
         SpawnDrones();
-        startEpisodeForAllDrones();
+        StartEpisodeForAllDrones();
     }
 
     private void FixedUpdate()
     {
-        //if (currentAction > Drone_Values.NumActionsInEpisode)
-        //    EpisodeEnded = true;
+        if (currentAction > Drone_Values.NumActionsInEpisode)
+            EpisodeEnded = true;
         if (EpisodeEnded)
         {
             EndEpisodeForAllDrones();

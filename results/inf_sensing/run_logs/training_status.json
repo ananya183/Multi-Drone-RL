@@ -1,0 +1,65 @@
+{
+    "DroneAgent": {
+        "checkpoints": [
+            {
+                "steps": 999962,
+                "file_path": "results\\inf_sensing\\DroneAgent\\DroneAgent-999962.onnx",
+                "reward": null,
+                "creation_time": 1725289382.4255846,
+                "auxillary_file_paths": [
+                    "results\\inf_sensing\\DroneAgent\\DroneAgent-999962.pt"
+                ]
+            },
+            {
+                "steps": 1499938,
+                "file_path": "results\\inf_sensing\\DroneAgent\\DroneAgent-1499938.onnx",
+                "reward": null,
+                "creation_time": 1725290728.2199485,
+                "auxillary_file_paths": [
+                    "results\\inf_sensing\\DroneAgent\\DroneAgent-1499938.pt"
+                ]
+            },
+            {
+                "steps": 1681691,
+                "file_path": "results\\inf_sensing\\DroneAgent\\DroneAgent-1681691.onnx",
+                "reward": null,
+                "creation_time": 1725291218.1489697,
+                "auxillary_file_paths": [
+                    "results\\inf_sensing\\DroneAgent\\DroneAgent-1681691.pt"
+                ]
+            },
+            {
+                "steps": 1699038,
+                "file_path": "results\\inf_sensing\\DroneAgent\\DroneAgent-1699038.onnx",
+                "reward": null,
+                "creation_time": 1725291329.1756804,
+                "auxillary_file_paths": [
+                    "results\\inf_sensing\\DroneAgent\\DroneAgent-1699038.pt"
+                ]
+            },
+            {
+                "steps": 1707980,
+                "file_path": "results\\inf_sensing\\DroneAgent\\DroneAgent-1707980.onnx",
+                "reward": null,
+                "creation_time": 1725291445.9228797,
+                "auxillary_file_paths": [
+                    "results\\inf_sensing\\DroneAgent\\DroneAgent-1707980.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 1707980,
+            "file_path": "results\\inf_sensing\\DroneAgent.onnx",
+            "reward": null,
+            "creation_time": 1725291445.9228797,
+            "auxillary_file_paths": [
+                "results\\inf_sensing\\DroneAgent\\DroneAgent-1707980.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "1.0.0",
+        "torch_version": "2.2.2+cu121"
+    }
+}
