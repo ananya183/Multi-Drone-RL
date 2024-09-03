@@ -1,0 +1,56 @@
+{
+    "DroneAgent": {
+        "checkpoints": [
+            {
+                "steps": 499977,
+                "file_path": "results\\survival_reward_1\\DroneAgent\\DroneAgent-499977.onnx",
+                "reward": null,
+                "creation_time": 1725341204.23447,
+                "auxillary_file_paths": [
+                    "results\\survival_reward_1\\DroneAgent\\DroneAgent-499977.pt"
+                ]
+            },
+            {
+                "steps": 999957,
+                "file_path": "results\\survival_reward_1\\DroneAgent\\DroneAgent-999957.onnx",
+                "reward": null,
+                "creation_time": 1725342741.1485853,
+                "auxillary_file_paths": [
+                    "results\\survival_reward_1\\DroneAgent\\DroneAgent-999957.pt"
+                ]
+            },
+            {
+                "steps": 1499999,
+                "file_path": "results\\survival_reward_1\\DroneAgent\\DroneAgent-1499999.onnx",
+                "reward": null,
+                "creation_time": 1725344279.9144104,
+                "auxillary_file_paths": [
+                    "results\\survival_reward_1\\DroneAgent\\DroneAgent-1499999.pt"
+                ]
+            },
+            {
+                "steps": 1821347,
+                "file_path": "results\\survival_reward_1\\DroneAgent\\DroneAgent-1821347.onnx",
+                "reward": null,
+                "creation_time": 1725345262.6512296,
+                "auxillary_file_paths": [
+                    "results\\survival_reward_1\\DroneAgent\\DroneAgent-1821347.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 1821347,
+            "file_path": "results\\survival_reward_1\\DroneAgent.onnx",
+            "reward": null,
+            "creation_time": 1725345262.6512296,
+            "auxillary_file_paths": [
+                "results\\survival_reward_1\\DroneAgent\\DroneAgent-1821347.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "1.0.0",
+        "torch_version": "2.2.2+cu121"
+    }
+}

@@ -176,7 +176,7 @@ MonoBehaviour:
   droneHeight: 1
   numActionsInEpisode: 5000
   trainingAreaSize: 50
-  trainingAreaNumber: 20
+  trainingAreaNumber: 1
   numberRays: 12
   currentEpisode: 0
   leaderDroneMultiplier: 0.2
