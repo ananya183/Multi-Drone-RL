@@ -168,7 +168,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0877d2bcaed128e42bffca53f2e4180f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxForce: 50
+  maxForce: 25
   maxSpeed: 5
   maxAngularSpeed: 3
   numberDrones: 2
