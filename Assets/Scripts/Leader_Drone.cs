@@ -14,10 +14,10 @@ public class Leader_Drone : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        OnEpisodeBegins();
+        OnEpisodeBegin();
     }
 
-    public void OnEpisodeBegins()
+    public void OnEpisodeBegin()
     {
         Waypoints = CreateWaypoints(Drone_Values.NumWaypoints, this.transform.parent);
     }

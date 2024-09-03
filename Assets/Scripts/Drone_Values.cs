@@ -15,6 +15,7 @@ public class Drone_Values : MonoBehaviour
     [Header("Epsiode Values")]
     [SerializeField] int numActionsInEpisode;
     [SerializeField] float trainingAreaSize;
+    [SerializeField] int trainingAreaNumber;
     [SerializeField] int numberRays;
     [SerializeField] int currentEpisode;
  
@@ -41,6 +42,7 @@ public class Drone_Values : MonoBehaviour
 
     public static int NumActionsInEpisode;
     public static float TrainingAreaSize;
+    public static int TrainingAreaNumber;
     public static int NumberRays;
     public static int CurrentEpisode;
 
@@ -66,6 +68,7 @@ public class Drone_Values : MonoBehaviour
 
         NumActionsInEpisode = numActionsInEpisode;
         TrainingAreaSize = trainingAreaSize;
+        TrainingAreaNumber = trainingAreaNumber;
         NumberRays = numberRays;
 
         UserControlledOrAutomated = userControlledOrAutomated;

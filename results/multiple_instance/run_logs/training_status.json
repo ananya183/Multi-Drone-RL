@@ -2,22 +2,22 @@
     "DroneAgent": {
         "checkpoints": [
             {
-                "steps": 1805,
-                "file_path": "results\\multiple_instance\\DroneAgent\\DroneAgent-1805.onnx",
+                "steps": 181479,
+                "file_path": "results\\multiple_instance\\DroneAgent\\DroneAgent-181479.onnx",
                 "reward": null,
-                "creation_time": 1725310426.0378528,
+                "creation_time": 1725317313.2944863,
                 "auxillary_file_paths": [
-                    "results\\multiple_instance\\DroneAgent\\DroneAgent-1805.pt"
+                    "results\\multiple_instance\\DroneAgent\\DroneAgent-181479.pt"
                 ]
             }
         ],
         "final_checkpoint": {
-            "steps": 1805,
+            "steps": 181479,
             "file_path": "results\\multiple_instance\\DroneAgent.onnx",
             "reward": null,
-            "creation_time": 1725310426.0378528,
+            "creation_time": 1725317313.2944863,
             "auxillary_file_paths": [
-                "results\\multiple_instance\\DroneAgent\\DroneAgent-1805.pt"
+                "results\\multiple_instance\\DroneAgent\\DroneAgent-181479.pt"
             ]
         }
     },

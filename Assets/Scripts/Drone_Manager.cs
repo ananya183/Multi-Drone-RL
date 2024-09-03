@@ -17,50 +17,17 @@ public class Drone_Manager : MonoBehaviour
     private void Start()
     {
         InitializeDrones();
-    }
-
-    private void InstantiateDrones()
-    {
-        LeaderDrone = Instantiate(LeaderPrefab, this.transform.parent);
-        LeaderDrone.GetComponent<Leader_Drone>().drone_manager = this;
-        drones.Add(LeaderDrone);
-        for (int i = 0; i < Drone_Values.NumberDrones - 1; i++)
-        {
-            GameObject followerDrone = Instantiate(FollowerPrefab, this.transform.parent);
-            followerDrone.GetComponent<Drone_Agent>().drone_Manager = this;
-            drones.Add(followerDrone);
-        }
-
-        foreach (GameObject drone in drones)
-        {
-            drone.SetActive(false);
-        }
-    }
-
-    public void StartEpisodeForAllDrones()
-    {
-        foreach (var drone in drones)
-        {
-            drone.SetActive(true);
-            var agent = drone.GetComponent<Drone_Agent>();
-            if (agent != null)
-            {
-                agent.OnEpisodeBegin();
-            }
-            var leader_agent = drone.GetComponent<Leader_Drone>();
-            if (leader_agent != null)
-            {
-                leader_agent.OnEpisodeBegins();
-            }
-                
-        }
-
+        SpawnDrones();
+        ActivateDrones();
+        //StartEpisodeForAllDrones();
     }
 
     void OnEpisodeBegins()
     {
         EpisodeEnded = false;
-        ReInitializeDrones();
+        SpawnDrones();
+        ActivateDrones();
+        StartEpisodeForAllDrones(); // Ensure episodes are started after reinitialization
     }
 
     public void EndEpisodeForAllDrones()
@@ -74,32 +41,90 @@ public class Drone_Manager : MonoBehaviour
             }
             each.SetActive(false);
         }
-        currentAction= 0;
+        currentAction = 0;
         Drone_Values.CurrentEpisode++;
 
         OnEpisodeBegins();
     }
+
+    //private void InstantiateDrones()
+    //{
+    //    LeaderDrone = Instantiate(LeaderPrefab, this.transform.parent);
+    //    LeaderDrone.GetComponent<Leader_Drone>().drone_manager = this;
+    //    drones.Add(LeaderDrone);
+    //    for (int i = 0; i < Drone_Values.NumberDrones - 1; i++)
+    //    {
+    //        GameObject followerDrone = Instantiate(FollowerPrefab, this.transform.parent);
+    //        followerDrone.GetComponent<Drone_Agent>().drone_Manager = this;
+    //        drones.Add(followerDrone);
+    //    }
+
+    //    foreach (GameObject drone in drones)
+    //    {
+    //        drone.SetActive(false);
+    //    }
+    //}
+
+    public void StartEpisodeForAllDrones()
+    {
+        foreach (var drone in drones)
+        {
+            var agent = drone.GetComponent<Drone_Agent>();
+            if (agent != null)
+            {
+                agent.OnEpisodeBegin();
+            }
+            var leader_agent = drone.GetComponent<Leader_Drone>();
+            if (leader_agent != null)
+            {
+                leader_agent.OnEpisodeBegin();
+            }
+                
+        }
+
+    }
+    
+
+    
 
     private void SpawnDrones()
     {
         List<Vector3> spawnPos = new List<Vector3>();
         Vector3 center = GetRandomPosition(Drone_Values.TrainingAreaSize - Drone_Values.R_spawn - 5f);
         int i = 0;
-        while (i < drones.Count) 
+        for (i = 0; i < drones.Count; i++)
         {
             ResetDrone(drones[i]);
             spawnPos.Add(PlaceOnCircle(center, Drone_Values.R_spawn, spawnPos));
             drones[i].transform.localPosition = spawnPos[i];
             float angle = Random.Range(0, 360);
-            drones[i].transform.localRotation = Quaternion.Euler(0, angle ,0);
-            i++;
+            drones[i].transform.localRotation = Quaternion.Euler(0, angle, 0);
         }
     }
 
     private void InitializeDrones()
     {
-        InstantiateDrones();
-        OnEpisodeBegins();
+        // Instantiate and add the leader drone
+        LeaderDrone = Instantiate(LeaderPrefab, this.transform.parent);
+        LeaderDrone.GetComponent<Leader_Drone>().drone_manager = this;
+        drones.Add(LeaderDrone);
+
+        // Instantiate and add follower drones
+        for (int i = 0; i < Drone_Values.NumberDrones - 1; i++)
+        {
+            GameObject followerDrone = Instantiate(FollowerPrefab, this.transform.parent);
+            followerDrone.GetComponent<Drone_Agent>().drone_Manager = this;
+            drones.Add(followerDrone);
+        }
+    }
+
+    private void ActivateDrones()
+    {
+        // Activate each drone after placing them
+        foreach (GameObject drone in drones)
+        {
+            drone.SetActive(true);
+        }
     }
 
     private void ReInitializeDrones()

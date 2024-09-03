@@ -65,6 +65,7 @@
     <Compile Include="Assets\Scripts\Leader_Drone.cs" />
     <Compile Include="Assets\Scripts\Drone_Values.cs" />
     <Compile Include="Assets\Scripts\Drone_Agent.cs" />
+    <Compile Include="Assets\Scripts\Training_Area_Initialize.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

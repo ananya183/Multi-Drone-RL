@@ -68,16 +68,10 @@ public class Drone_Agent : Agent
         {
             sensor.AddObservation(sensedObjectsPos[i] / Drone_Values.R_sense);
         }
-        //sensor.AddObservation(currentSensed);
-        //sensor.AddObservation(prevSensed);
-        //sensor.AddObservation(totalSensed);
-        
     }
 
     public override void OnActionReceived(ActionBuffers actions)
     {
-        if (drone_Manager.currentAction > 0)
-        {
             var action = actions.ContinuousActions;
 
             Vector3 controlSignal = Vector3.zero;
@@ -96,7 +90,6 @@ public class Drone_Agent : Agent
             //Debug.Log($"Cumulative Reward before Physicomimetics: {GetCumulativeReward()}");
             AddNetReward();
             //Debug.Log($"Cumulative Reward After Physicomimetics: {GetCumulativeReward()}");
-        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -172,7 +165,6 @@ public class Drone_Agent : Agent
         //}
         //float lostReward = AddLostReward();
         //netReward += lostReward;
-        Debug.Log($"drone:{droneProximityReward} survival:{survivalReward} Net:{netReward}");
         AddReward(netReward);
         TotalReward += netReward;
     }
@@ -196,7 +188,7 @@ public class Drone_Agent : Agent
 
     private float AddSurvivalReward()
     {
-        return 0.01f;
+        return 0.1f;
     }
 
     private float AddObstacleProximityReward()
