@@ -11,6 +11,7 @@ public class Drone_Values : MonoBehaviour
     [SerializeField] int numberDrones;
     [SerializeField] int maxNumberDrones;
     [SerializeField] float droneHeight;
+    
 
     [Header("Epsiode Values")]
     [SerializeField] int numActionsInEpisode;
@@ -23,14 +24,15 @@ public class Drone_Values : MonoBehaviour
     [Header("Leader Drone Values")]
     [SerializeField] float leaderDroneMultiplier;
     [SerializeField] int numWaypoints;
+    [SerializeField] float waypointAreaThreshold;
     [SerializeField] bool userControlledOrAutomated;
 
     [Header("Follower Drone Values")]
     [SerializeField] float r_sense;     // sensingZoneRadius
     [SerializeField] float r_spawn;
     [SerializeField] float r_out;       // goodRegionOuterRadius
-    // [SerializeField] float r_in;        // goodRegionInnerRadius, also, Bad Region Outer Radius
-    // [SerializeField] float r_tooclose;
+    [SerializeField] float r_in;        // goodRegionInnerRadius, also, Bad Region Outer Radius
+    [SerializeField] float r_tooclose;
 
 
     public static float MaxForce;
@@ -48,13 +50,14 @@ public class Drone_Values : MonoBehaviour
 
     public static float LeaderDroneMultiplier;
     public static int NumWaypoints;
+    public static float WaypointAreaThreshold;
     public static bool UserControlledOrAutomated;
 
     public static float R_sense;
     public static float R_spawn;
     public static float R_out;
-    // public static float R_in;
-    // public static float R_tooclose;
+    public static float R_in;
+    public static float R_tooclose;
 
 
     private void Awake()
@@ -65,6 +68,7 @@ public class Drone_Values : MonoBehaviour
         NumberDrones = numberDrones;
         MaxNumberDrones = maxNumberDrones;
         DroneHeight = droneHeight;
+        WaypointAreaThreshold = waypointAreaThreshold;
 
         NumActionsInEpisode = numActionsInEpisode;
         TrainingAreaSize = trainingAreaSize;
@@ -78,8 +82,8 @@ public class Drone_Values : MonoBehaviour
         R_sense = r_sense;
         R_spawn = r_spawn;
         R_out = r_out;
-        // R_in = r_in;
-        // R_tooclose = r_tooclose;
+        R_in = r_in;
+        R_tooclose = r_tooclose;
         CurrentEpisode = currentEpisode;
     }
 

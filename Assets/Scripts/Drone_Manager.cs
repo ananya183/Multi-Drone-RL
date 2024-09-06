@@ -106,7 +106,7 @@ public class Drone_Manager : MonoBehaviour
     {
         // Instantiate and add the leader drone
         LeaderDrone = Instantiate(LeaderPrefab, this.transform.parent);
-        LeaderDrone.GetComponent<Leader_Drone>().drone_manager = this;
+        LeaderDrone.GetComponent<Leader_Drone>().drone_Manager = this;
         drones.Add(LeaderDrone);
 
         // Instantiate and add follower drones
@@ -152,20 +152,20 @@ public class Drone_Manager : MonoBehaviour
 
     Vector3 PlaceOnCircle(Vector3 center, float radius, List<Vector3> already, float threshold = 5f)
     {
-        var r = Random.Range(0, radius);
-        var angle = Random.Range(0, 2 * Mathf.PI);
-
         Vector3 pos = center;
-        pos.x = center.x + Mathf.Cos(angle) * r;
-        pos.z = center.z + Mathf.Sin(angle) * r;
 
         foreach (var no_spawn in already)
         {
-            if (Vector3.Distance(no_spawn, pos) < threshold)
+
+            do 
             {
+                var r = Random.Range(0, radius);
+                var angle = Random.Range(0, 2 * Mathf.PI);
                 pos.x = center.x + Mathf.Cos(angle) * r;
                 pos.z = center.z + Mathf.Sin(angle) * r;
-            }
+            }while ((Vector3.Distance(no_spawn, pos) < threshold) &&
+                    Mathf.Abs(pos.x) < Drone_Values.TrainingAreaSize &&
+                    Mathf.Abs(pos.z) < Drone_Values.TrainingAreaSize);
         }
         return pos;
     }
