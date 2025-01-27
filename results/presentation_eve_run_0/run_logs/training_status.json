@@ -1,0 +1,65 @@
+{
+    "DroneAgent": {
+        "checkpoints": [
+            {
+                "steps": 499911,
+                "file_path": "results\\presentation_eve_run_0\\DroneAgent\\DroneAgent-499911.onnx",
+                "reward": 11550.962664834815,
+                "creation_time": 1732819004.8028574,
+                "auxillary_file_paths": [
+                    "results\\presentation_eve_run_0\\DroneAgent\\DroneAgent-499911.pt"
+                ]
+            },
+            {
+                "steps": 999975,
+                "file_path": "results\\presentation_eve_run_0\\DroneAgent\\DroneAgent-999975.onnx",
+                "reward": 9719.75275619254,
+                "creation_time": 1732819546.450943,
+                "auxillary_file_paths": [
+                    "results\\presentation_eve_run_0\\DroneAgent\\DroneAgent-999975.pt"
+                ]
+            },
+            {
+                "steps": 1499934,
+                "file_path": "results\\presentation_eve_run_0\\DroneAgent\\DroneAgent-1499934.onnx",
+                "reward": 10085.662116650714,
+                "creation_time": 1732820082.5576215,
+                "auxillary_file_paths": [
+                    "results\\presentation_eve_run_0\\DroneAgent\\DroneAgent-1499934.pt"
+                ]
+            },
+            {
+                "steps": 1999911,
+                "file_path": "results\\presentation_eve_run_0\\DroneAgent\\DroneAgent-1999911.onnx",
+                "reward": 12614.895551087426,
+                "creation_time": 1732820608.6564615,
+                "auxillary_file_paths": [
+                    "results\\presentation_eve_run_0\\DroneAgent\\DroneAgent-1999911.pt"
+                ]
+            },
+            {
+                "steps": 2236225,
+                "file_path": "results\\presentation_eve_run_0\\DroneAgent\\DroneAgent-2236225.onnx",
+                "reward": null,
+                "creation_time": 1732820854.9760346,
+                "auxillary_file_paths": [
+                    "results\\presentation_eve_run_0\\DroneAgent\\DroneAgent-2236225.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 2236225,
+            "file_path": "results\\presentation_eve_run_0\\DroneAgent.onnx",
+            "reward": null,
+            "creation_time": 1732820854.9760346,
+            "auxillary_file_paths": [
+                "results\\presentation_eve_run_0\\DroneAgent\\DroneAgent-2236225.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "1.0.0",
+        "torch_version": "2.2.2+cu121"
+    }
+}
