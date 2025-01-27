@@ -85,7 +85,7 @@ public class Training_Area_Initialize : MonoBehaviour
                 trainingArea.name = $"TrainingArea_up{up - 1}_down{down - 1}";
             }
         }
-        
+
 
 
         //// Calculate the midpoint for splitting the areas

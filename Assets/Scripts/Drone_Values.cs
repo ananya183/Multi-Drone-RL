@@ -11,7 +11,7 @@ public class Drone_Values : MonoBehaviour
     [SerializeField] int numberDrones;
     [SerializeField] int maxNumberDrones;
     [SerializeField] float droneHeight;
-    
+
 
     [Header("Epsiode Values")]
     [SerializeField] int numActionsInEpisode;
@@ -19,7 +19,7 @@ public class Drone_Values : MonoBehaviour
     [SerializeField] int trainingAreaNumber;
     [SerializeField] int numberRays;
     [SerializeField] int currentEpisode;
- 
+
 
     [Header("Leader Drone Values")]
     [SerializeField] float leaderDroneMultiplier;
@@ -58,6 +58,7 @@ public class Drone_Values : MonoBehaviour
     public static float R_out;
     public static float R_in;
     public static float R_tooclose;
+    public static float R_opt;
 
 
     private void Awake()
@@ -83,6 +84,7 @@ public class Drone_Values : MonoBehaviour
         R_spawn = r_spawn;
         R_out = r_out;
         R_in = r_in;
+        R_opt = (R_out + R_in) / 2;
         R_tooclose = r_tooclose;
         CurrentEpisode = currentEpisode;
     }
