@@ -19,7 +19,7 @@ public class Drone_Manager : MonoBehaviour
         InitializeDrones();
         SpawnDrones();
         ActivateDrones();
-        //StartEpisodeForAllDrones();
+
     }
 
     void OnEpisodeBegins()
@@ -145,12 +145,17 @@ public class Drone_Manager : MonoBehaviour
         }
     }
 
-    private void InitializeDrones()
+    private void  InitializeDrones()
     {
         // Instantiate and add the leader drone
         LeaderDrone = Instantiate(LeaderPrefab, this.transform.parent);
         LeaderDrone.GetComponent<Drone_Common>().drone_Manager = this;
         drones.Add(LeaderDrone);
+
+
+        // Randomising the number of drones being spawned in every new episode.
+        NumberDrones = Random.Range(2, maxNumberDrones+1); //Randomise from 1 to maxNumDrones
+        Debug.Log($"Number of Drones Randomised to: {numberDrones}");
 
         // Instantiate and add follower drones
         for (int i = 0; i < Drone_Values.NumberDrones - 1; i++)
