@@ -40,6 +40,7 @@ public class MovingObstacle : MonoBehaviour
         {
             // Reverse direction on collision
             direction = -direction;
+            // reverse angular velocit on collision
             angularVelocity = -angularVelocity;
         }
     }
