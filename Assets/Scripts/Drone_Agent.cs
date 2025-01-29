@@ -184,7 +184,7 @@ public class Drone_Agent : Agent
 
     private void AddDroneObservationsRandomly(VectorSensor sensor)
     {
-        int totalSlots = Drone_Values.NumberDrones - 1;
+        int totalSlots = Drone_Values.MaxNumberDrones - 1;
         Dictionary<int, Vector2> observationSlots = new Dictionary<int, Vector2>();
 
         // Fill the dictionary with Vector2.positiveInfinity for all slots
