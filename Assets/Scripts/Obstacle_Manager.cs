@@ -34,18 +34,9 @@ public class MovingObstacle : MonoBehaviour
 
         // Clamp the velocity to maxSpeed
         rBody.velocity = Vector3.ClampMagnitude(rBody.velocity, maxSpeed);
-
-        // Check for collisions with boundaries or other obstacles
-        if (CollidedWithBoundary() || CollidedWithObstacle())
-        {
-            // Reverse direction on collision
-            direction = -direction;
-            // reverse angular velocit on collision
-            angularVelocity = -angularVelocity;
-        }
     }
 
-        void OnCollisionEnter(Collision collision)
+    void OnCollisionEnter(Collision collision)
     {
         if (CollidedWithBoundary(collision) || CollidedWithObstacle(collision))
         {
@@ -54,7 +45,6 @@ public class MovingObstacle : MonoBehaviour
             angularVelocity = -angularVelocity;
         }
     }
-
 
     private bool CollidedWithBoundary(Collision collision)
     {
