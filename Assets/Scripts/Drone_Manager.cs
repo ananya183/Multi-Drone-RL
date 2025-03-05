@@ -154,8 +154,8 @@ public class Drone_Manager : MonoBehaviour
 
 
         // Randomising the number of drones being spawned in every new episode.
-        Drone_Values.NumberDrones = Random.Range(2, Drone_Values.maxNumberDrones+1); //Randomise from 1 to maxNumDrones
-        Debug.Log($"Number of Drones Randomised to: {Drone_Values.numberDrones}");
+        Drone_Values.NumberDrones = Random.Range(2, Drone_Values.MaxNumberDrones+1); //Randomise from 1 to maxNumDrones
+        Debug.Log($"Number of Drones Randomised to: {Drone_Values.NumberDrones}");
 
         // Instantiate and add follower drones
         for (int i = 0; i < Drone_Values.NumberDrones - 1; i++)
