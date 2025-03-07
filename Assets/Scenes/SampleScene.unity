@@ -179,7 +179,7 @@ MonoBehaviour:
   trainingAreaNumber: 1
   numberRays: 12
   currentEpisode: 0
-  leaderDroneMultiplier: 0.05
+  leaderDroneMultiplier: 0.2
   numWaypoints: 2
   waypointAreaThreshold: 10
   userControlledOrAutomated: 0

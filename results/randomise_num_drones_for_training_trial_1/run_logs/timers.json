@@ -1,0 +1,47 @@
+{
+    "name": "root",
+    "metadata": {
+        "timer_format_version": "0.1.0",
+        "start_time_seconds": "1738073529",
+        "python_version": "3.10.2 (tags/v3.10.2:a58ebcc, Jan 17 2022, 14:12:15) [MSC v.1929 64 bit (AMD64)]",
+        "command_line_arguments": "E:\\Python_Venvs\\mlagents-venv\\Scripts\\mlagents-learn config\\drone_config.yaml --run-id=randomise_num_drones_for_training_trial_1 --force",
+        "mlagents_version": "1.0.0",
+        "mlagents_envs_version": "1.0.0",
+        "communication_protocol_version": "1.5.0",
+        "pytorch_version": "2.2.2+cu121",
+        "numpy_version": "1.21.2",
+        "end_time_seconds": "1738073591"
+    },
+    "total": 61.4870077999949,
+    "count": 1,
+    "self": 0.003930299979401752,
+    "children": {
+        "run_training.setup": {
+            "total": 0.09815190001972951,
+            "count": 1,
+            "self": 0.09815190001972951
+        },
+        "TrainerController.start_learning": {
+            "total": 61.38492559999577,
+            "count": 1,
+            "self": 0.00031799994758330286,
+            "children": {
+                "TrainerController._reset_env": {
+                    "total": 61.38460060002399,
+                    "count": 1,
+                    "self": 61.38460060002399
+                },
+                "trainer_threads": {
+                    "total": 8.00006091594696e-07,
+                    "count": 1,
+                    "self": 8.00006091594696e-07
+                },
+                "TrainerController._save_models": {
+                    "total": 6.200018106028438e-06,
+                    "count": 1,
+                    "self": 6.200018106028438e-06
+                }
+            }
+        }
+    }
+}
