@@ -47,6 +47,18 @@ public class Drone_Agent : Agent
     {
         rBody = GetComponent<Rigidbody>();
         drone_common = GetComponent<Drone_Common>();
+
+        if (drone_common != null)
+        {
+            if (drone_common.drone_Manager == null)
+            {
+                Debug.LogError("drone_common.drone_Manager is not assigned");
+            }
+        }
+        else
+        {
+            Debug.LogError("drone_common is not assigned");
+        }
     }
 
     public override void OnEpisodeBegin()
@@ -152,27 +164,33 @@ public class Drone_Agent : Agent
 
     private void OnCollisionEnter(Collision collision)
     {
-        foreach (var drone in drone_common.drone_Manager.drones)
+        if (drone_common != null && drone_common.drone_Manager != null)
         {
-            var agent = drone.GetComponent<Agent>();
-            if (agent != null)
-                //agent.SetReward(-1);
-                if (collision.gameObject.tag == "Drone")
+            foreach (var drone in drone_common.drone_Manager.drones)
+            {
+                var agent = drone.GetComponent<Agent>();
+                if (agent != null)
                 {
-                    collidedWithDrone = true;
+                    if (collision.gameObject.tag == "Drone")
+                    {
+                        collidedWithDrone = true;
+                    }
+                    else if (collision.gameObject.tag == "Obstacle")
+                    {
+                        collidedWithObstacle = true;
+                    }
+                    else if (collision.gameObject.tag == "Boundary")
+                    {
+                        collidedWithBoundary = true;
+                    }
                 }
-                else if (collision.gameObject.tag == "Obstacle")
-                {
-                    collidedWithObstacle = true;
-                }
-                else if (collision.gameObject.tag == "Boundary")
-                {
-                    collidedWithBoundary = true;
-                }
+            }
+            drone_common.drone_Manager.EpisodeEnded = true;
         }
-        drone_common.drone_Manager.EpisodeEnded = true;
-        //EndEpisode();
-        //this.gameObject.SetActive(false);
+        else
+        {
+            Debug.LogError("drone_common or drone_common.drone_Manager is null");
+        }
     }
     public override void Heuristic(in ActionBuffers actionsOut)
     {
