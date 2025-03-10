@@ -600,9 +600,9 @@ GameObject:
   - component: {fileID: 4624179986562834306}
   - component: {fileID: 437805421395785461}
   - component: {fileID: 640873658788788968}
+  - component: {fileID: 8097149444175099009}
   - component: {fileID: 6162480525521934823}
   - component: {fileID: 4451719572638741890}
-  - component: {fileID: 8097149444175099009}
   m_Layer: 6
   m_Name: Drone
   m_TagString: Drone
@@ -651,7 +651,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 0
   m_CollisionDetection: 1
 --- !u!65 &437805421395785461
 BoxCollider:
@@ -690,6 +690,24 @@ MonoBehaviour:
   totalSensed: 0
   prevSensed: 0
   currentSensed: 0
+--- !u!114 &8097149444175099009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5549455562311884032}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b6c0c10e4cff014dac724b32de4d731, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  agentParameters:
+    maxStep: 0
+  hasUpgradedFromAgentParameters: 1
+  MaxStep: 0
+  sensedObjectsPos: []
+  TotalReward: 0
 --- !u!114 &6162480525521934823
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -734,24 +752,6 @@ MonoBehaviour:
   m_UseChildSensors: 1
   m_UseChildActuators: 1
   m_ObservableAttributeHandling: 0
---- !u!114 &8097149444175099009
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5549455562311884032}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b6c0c10e4cff014dac724b32de4d731, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  agentParameters:
-    maxStep: 0
-  hasUpgradedFromAgentParameters: 1
-  MaxStep: 0
-  sensedObjectsPos: []
-  TotalReward: 0
 --- !u!1 &6865103768694648309
 GameObject:
   m_ObjectHideFlags: 0

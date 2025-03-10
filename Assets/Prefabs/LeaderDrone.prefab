@@ -684,7 +684,9 @@ GameObject:
   - component: {fileID: 4624179986562834306}
   - component: {fileID: 437805421395785461}
   - component: {fileID: 1279435751898222592}
+  - component: {fileID: -8133239695446117956}
   - component: {fileID: -787808963653675623}
+  - component: {fileID: 7417250074567433505}
   - component: {fileID: 5436354121853989221}
   m_Layer: 6
   m_Name: LeaderDrone
@@ -773,6 +775,24 @@ MonoBehaviour:
   totalSensed: 0
   prevSensed: 0
   currentSensed: 0
+--- !u!114 &-8133239695446117956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5549455562311884032}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b6c0c10e4cff014dac724b32de4d731, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  agentParameters:
+    maxStep: 0
+  hasUpgradedFromAgentParameters: 1
+  MaxStep: 0
+  sensedObjectsPos: []
+  TotalReward: 0
 --- !u!114 &-787808963653675623
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -791,6 +811,20 @@ MonoBehaviour:
   MaxStep: 0
   sensedObjectsPos: []
   TotalReward: 0
+--- !u!114 &7417250074567433505
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5549455562311884032}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a5c9d521e5ef4759a8246a07d52221e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DecisionPeriod: 3
+  TakeActionsBetweenDecisions: 1
 --- !u!114 &5436354121853989221
 MonoBehaviour:
   m_ObjectHideFlags: 0
