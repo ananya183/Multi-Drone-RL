@@ -11,7 +11,8 @@ public class Drone_Agent : Agent
     protected Rigidbody rBody;
     LayerMask dronesLayer; // For sensing drones
     protected Drone_Common drone_common;
-
+    public Drone_Manager drone_Manager;
+    
     // Reward Valuations in High to Low Order
     private readonly float swarmationReward = 200.0f;
     private readonly float insideGoodRegionReward = 40.0f;
@@ -152,7 +153,7 @@ public class Drone_Agent : Agent
 
     private void OnCollisionEnter(Collision collision)
     {
-        foreach (var drone in drone_common.drone_Manager.drones)
+        foreach (var drone in drone_Manager.drones)
         {
             var agent = drone.GetComponent<Agent>();
             if (agent != null)
@@ -170,7 +171,7 @@ public class Drone_Agent : Agent
                     collidedWithBoundary = true;
                 }
         }
-        drone_common.drone_Manager.EpisodeEnded = true;
+        drone_Manager.EpisodeEnded = true;
         //EndEpisode();
         //this.gameObject.SetActive(false);
     }

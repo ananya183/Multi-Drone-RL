@@ -2740,7 +2740,7 @@ MonoBehaviour:
   FollowerPrefab: {fileID: 5549455562311884032, guid: 393a71c7b99e1684595a817e6296208e, type: 3}
   LeaderPrefab: {fileID: 5549455562311884032, guid: 0e16c82f70095bd4ebab4c8b7bb1836c, type: 3}
   drones: []
-  LeaderDrone: {fileID: 0}
+  LeaderDrone: {fileID: 5549455562311884032, guid: 0e16c82f70095bd4ebab4c8b7bb1836c, type: 3}
   EpisodeEnded: 0
   currentAction: 0
 --- !u!1 &8785611666304294906
