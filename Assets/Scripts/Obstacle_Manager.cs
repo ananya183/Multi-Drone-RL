@@ -13,8 +13,8 @@ public class MovingObstacle : MonoBehaviour
     protected Vector3 direction;
     protected float angularVelocity;
 
-    private bool collidedWithObstacle = false;
-    private bool collidedWithBoundary = false;
+    // private bool collidedWithObstacle = false;
+    // private bool collidedWithBoundary = false;
 
     void Start()
     {

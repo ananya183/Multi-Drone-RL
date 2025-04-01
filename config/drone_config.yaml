@@ -1,34 +1,3 @@
-# behaviors:
-#   DroneAgent:
-#     trainer_type: ppo
-#     hyperparameters:
-#       batch_size: 10
-#       buffer_size: 100
-#       # learning_rate: 3.0e-4
-#       learning_rate: 3.0e-8
-#       # beta: 5.0e-4
-#       beta: 0.1
-#       # epsilon: 0.2
-#       epsilon: 0.9
-#       lambd: 0.9
-#       num_epoch: 3
-#       # learning_rate_schedule: linear
-#       learning_rate_schedule: constant
-#       beta_schedule: constant
-#       epsilon_schedule: linear
-#     network_settings:
-#       # normalize: false
-#       normalize: true
-#       hidden_units: 128
-#       # num_layers: 2
-#       num_layers: 4
-#     reward_signals:
-#       extrinsic:
-#         gamma: 0.99
-#         strength: 1.0
-#     max_steps: 50000000
-#     time_horizon: 64
-#     summary_freq: 1000
 behaviors:
   DroneAgent:
     trainer_type: ppo
@@ -54,4 +23,4 @@ behaviors:
     max_steps: 500000000
     time_horizon: 256
     summary_freq: 1000
-    use_gpu: true
+

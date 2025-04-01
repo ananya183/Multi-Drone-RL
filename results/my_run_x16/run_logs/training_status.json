@@ -1,0 +1,65 @@
+{
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.30.0",
+        "torch_version": "2.6.0+cpu"
+    },
+    "DroneAgent": {
+        "checkpoints": [
+            {
+                "steps": 1685,
+                "file_path": "C:\\Users\\Kiwi\\Desktop\\Ananya\\Multi-Drone-RL\\results\\my_run_x16\\DroneAgent\\DroneAgent-1685.onnx",
+                "reward": 5254.285714285715,
+                "creation_time": 1743391470.3574188,
+                "auxillary_file_paths": [
+                    "C:\\Users\\Kiwi\\Desktop\\Ananya\\Multi-Drone-RL\\results\\my_run_x16\\DroneAgent\\DroneAgent-1685.pt"
+                ]
+            },
+            {
+                "steps": 6328,
+                "file_path": "C:\\Users\\Kiwi\\Desktop\\Ananya\\Multi-Drone-RL\\results\\my_run_x16\\DroneAgent\\DroneAgent-6328.onnx",
+                "reward": 7508.333333333333,
+                "creation_time": 1743391520.2847412,
+                "auxillary_file_paths": [
+                    "C:\\Users\\Kiwi\\Desktop\\Ananya\\Multi-Drone-RL\\results\\my_run_x16\\DroneAgent\\DroneAgent-6328.pt"
+                ]
+            },
+            {
+                "steps": 13593,
+                "file_path": "C:\\Users\\Kiwi\\Desktop\\Ananya\\Multi-Drone-RL\\results\\my_run_x16\\DroneAgent\\DroneAgent-13593.onnx",
+                "reward": 3263.3333333333335,
+                "creation_time": 1743391621.3878386,
+                "auxillary_file_paths": [
+                    "C:\\Users\\Kiwi\\Desktop\\Ananya\\Multi-Drone-RL\\results\\my_run_x16\\DroneAgent\\DroneAgent-13593.pt"
+                ]
+            },
+            {
+                "steps": 21033,
+                "file_path": "C:\\Users\\Kiwi\\Desktop\\Ananya\\Multi-Drone-RL\\results\\my_run_x16\\DroneAgent\\DroneAgent-21033.onnx",
+                "reward": 8032.820512820513,
+                "creation_time": 1743391742.7510126,
+                "auxillary_file_paths": [
+                    "C:\\Users\\Kiwi\\Desktop\\Ananya\\Multi-Drone-RL\\results\\my_run_x16\\DroneAgent\\DroneAgent-21033.pt"
+                ]
+            },
+            {
+                "steps": 23984,
+                "file_path": "C:\\Users\\Kiwi\\Desktop\\Ananya\\Multi-Drone-RL\\results\\my_run_x16\\DroneAgent\\DroneAgent-23984.onnx",
+                "reward": 1549.5,
+                "creation_time": 1743391937.644834,
+                "auxillary_file_paths": [
+                    "C:\\Users\\Kiwi\\Desktop\\Ananya\\Multi-Drone-RL\\results\\my_run_x16\\DroneAgent\\DroneAgent-23984.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 23984,
+            "file_path": "C:\\Users\\Kiwi\\Desktop\\Ananya\\Multi-Drone-RL\\results\\my_run_x16\\DroneAgent.onnx",
+            "reward": 1549.5,
+            "creation_time": 1743391937.644834,
+            "auxillary_file_paths": [
+                "C:\\Users\\Kiwi\\Desktop\\Ananya\\Multi-Drone-RL\\results\\my_run_x16\\DroneAgent\\DroneAgent-23984.pt"
+            ]
+        }
+    }
+}

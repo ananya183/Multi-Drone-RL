@@ -1,0 +1,47 @@
+{
+    "name": "root",
+    "metadata": {
+        "timer_format_version": "0.1.0",
+        "start_time_seconds": "1743516116",
+        "python_version": "3.9.0 (tags/v3.9.0:9cf6752, Oct  5 2020, 15:34:40) [MSC v.1927 64 bit (AMD64)]",
+        "command_line_arguments": "C:\\Users\\Kiwi\\mlagents_env\\Scripts\\mlagents-learn C:\\Users\\Kiwi\\Desktop\\Ananya\\November-MDRL-Back-Up\\config\\drone_config.yaml --run-id=april-run-1 --results-dir=C:\\Users\\Kiwi\\Desktop\\Ananya\\November-MDRL-Back-Up\\results --resume",
+        "mlagents_version": "0.30.0",
+        "mlagents_envs_version": "0.30.0",
+        "communication_protocol_version": "1.5.0",
+        "pytorch_version": "2.6.0+cpu",
+        "numpy_version": "1.21.2",
+        "end_time_seconds": "1743516121"
+    },
+    "total": 5.3052848,
+    "count": 1,
+    "self": 0.003149200000000185,
+    "children": {
+        "run_training.setup": {
+            "total": 0.04394220000000004,
+            "count": 1,
+            "self": 0.04394220000000004
+        },
+        "TrainerController.start_learning": {
+            "total": 5.2581934,
+            "count": 1,
+            "self": 0.0002487999999996049,
+            "children": {
+                "TrainerController._reset_env": {
+                    "total": 5.2579338,
+                    "count": 1,
+                    "self": 5.2579338
+                },
+                "trainer_threads": {
+                    "total": 5.999999999062311e-07,
+                    "count": 1,
+                    "self": 5.999999999062311e-07
+                },
+                "TrainerController._save_models": {
+                    "total": 1.0200000000182285e-05,
+                    "count": 1,
+                    "self": 1.0200000000182285e-05
+                }
+            }
+        }
+    }
+}

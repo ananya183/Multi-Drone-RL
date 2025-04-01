@@ -706,6 +706,7 @@ MonoBehaviour:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
   MaxStep: 0
+  drone_Manager: {fileID: 0}
   sensedObjectsPos: []
   TotalReward: 0
 --- !u!114 &6162480525521934823
@@ -735,7 +736,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 41
+    VectorObservationSize: 177
     NumStackedVectorObservations: 2
     m_ActionSpec:
       m_NumContinuousActions: 2

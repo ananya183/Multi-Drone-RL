@@ -10,16 +10,15 @@ public class Drone_Manager : MonoBehaviour
     public GameObject LeaderPrefab;
     public List<GameObject> drones;
     public GameObject LeaderDrone;
+
     public bool EpisodeEnded;
-
     public int currentAction = 0;
-
     private void Start()
     {
         InitializeDrones();
         SpawnDrones();
         ActivateDrones();
-
+        //StartEpisodeForAllDrones();
     }
 
     void OnEpisodeBegins()
@@ -47,24 +46,6 @@ public class Drone_Manager : MonoBehaviour
         OnEpisodeBegins();
     }
 
-    //private void InstantiateDrones()
-    //{
-    //    LeaderDrone = Instantiate(LeaderPrefab, this.transform.parent);
-    //    LeaderDrone.GetComponent<Leader_Drone>().drone_manager = this;
-    //    drones.Add(LeaderDrone);
-    //    for (int i = 0; i < Drone_Values.NumberDrones - 1; i++)
-    //    {
-    //        GameObject followerDrone = Instantiate(FollowerPrefab, this.transform.parent);
-    //        followerDrone.GetComponent<Drone_Agent>().drone_Manager = this;
-    //        drones.Add(followerDrone);
-    //    }
-
-    //    foreach (GameObject drone in drones)
-    //    {
-    //        drone.SetActive(false);
-    //    }
-    //}
-
     public void StartEpisodeForAllDrones()
     {
         foreach (var drone in drones)
@@ -79,29 +60,10 @@ public class Drone_Manager : MonoBehaviour
             {
                 leader_agent.OnEpisodeBegin();
             }
-
+                
         }
 
     }
-
-
-
-
-
-    //private void SpawnDrones()
-    //{
-    //    List<Vector3> spawnPos = new List<Vector3>();
-    //    Vector3 center = GetRandomPosition(Drone_Values.TrainingAreaSize - Drone_Values.R_spawn - 5f);
-    //    int i = 0;
-    //    for (i = 0; i < drones.Count; i++)
-    //    {
-    //        ResetDrone(drones[i]);
-    //        spawnPos.Add(PlaceOnCircle(center, Drone_Values.R_spawn, spawnPos));
-    //        drones[i].transform.localPosition = spawnPos[i];
-    //        float angle = Random.Range(0, 360);
-    //        drones[i].transform.localRotation = Quaternion.Euler(0, angle, 0);
-    //    }
-    //}
 
     private void SpawnDrones()
     {
@@ -110,58 +72,29 @@ public class Drone_Manager : MonoBehaviour
         int i = 0;
         for (i = 0; i < drones.Count; i++)
         {
-            Vector3 newSpawnPos;
-            bool validSpawn = false;
-
-            // Try multiple positions until we find one that is not too close to obstacles
-            int maxAttempts = 50000000; // Limit the number of attempts to find a valid spawn position
-            int attempts = 0;
-
-            while (!validSpawn && attempts < maxAttempts)
-            {
-                newSpawnPos = PlaceOnCircle(center, Drone_Values.R_spawn, spawnPos);
-
-                // Check if there are any obstacles within 3 units of the spawn position
-                if (!IsNearObstacle(newSpawnPos, 3f))
-                {
-                    validSpawn = true; // Valid spawn position found
-                    spawnPos.Add(newSpawnPos);
-                    drones[i].transform.localPosition = newSpawnPos;
-                    float angle = Random.Range(0, 360);
-                    drones[i].transform.localRotation = Quaternion.Euler(0, angle, 0);
-                }
-                attempts++;
-            }
-
-            // Reset the drone once a valid spawn position is found
             ResetDrone(drones[i]);
-
-            // If max attempts were reached without finding a valid spot, handle accordingly
-            if (attempts >= maxAttempts)
-            {
-                Debug.LogWarning("Could not find a valid spawn position for drone " + i);
-                drones[i].SetActive(false); // Optionally disable the drone if no valid spawn is found
-            }
+            spawnPos.Add(PlaceOnCircle(center, Drone_Values.R_spawn, spawnPos));
+            drones[i].transform.localPosition = spawnPos[i];
+            float angle = Random.Range(0, 360);
+            drones[i].transform.localRotation = Quaternion.Euler(0, angle, 0);
         }
     }
 
-    private void  InitializeDrones()
+    private void InitializeDrones()
     {
+        
+        // Clear the drones list to ensure it is empty before initialization
+        // drones.Clear();
         // Instantiate and add the leader drone
         LeaderDrone = Instantiate(LeaderPrefab, this.transform.parent);
-        LeaderDrone.GetComponent<Drone_Common>().drone_Manager = this;
+        LeaderDrone.GetComponent<Leader_Drone>().drone_Manager = this;
         drones.Add(LeaderDrone);
-
-
-        // Randomising the number of drones being spawned in every new episode.
-        Drone_Values.NumberDrones = Random.Range(2, Drone_Values.MaxNumberDrones+1); //Randomise from 1 to maxNumDrones
-        Debug.Log($"Number of Drones Randomised to: {Drone_Values.NumberDrones}");
 
         // Instantiate and add follower drones
         for (int i = 0; i < Drone_Values.NumberDrones - 1; i++)
         {
             GameObject followerDrone = Instantiate(FollowerPrefab, this.transform.parent);
-            followerDrone.GetComponent<Drone_Common>().drone_Manager = this;
+            followerDrone.GetComponent<Drone_Agent>().drone_Manager = this;
             drones.Add(followerDrone);
         }
     }
@@ -205,13 +138,13 @@ public class Drone_Manager : MonoBehaviour
         foreach (var no_spawn in already)
         {
 
-            do
+            do 
             {
                 var r = Random.Range(0, radius);
                 var angle = Random.Range(0, 2 * Mathf.PI);
                 pos.x = center.x + Mathf.Cos(angle) * r;
                 pos.z = center.z + Mathf.Sin(angle) * r;
-            } while ((Vector3.Distance(no_spawn, pos) < threshold) &&
+            }while ((Vector3.Distance(no_spawn, pos) < threshold) &&
                     Mathf.Abs(pos.x) < Drone_Values.TrainingAreaSize &&
                     Mathf.Abs(pos.z) < Drone_Values.TrainingAreaSize);
         }
@@ -222,28 +155,11 @@ public class Drone_Manager : MonoBehaviour
     {
         drone.transform.localPosition = Vector3.zero;
         drone.transform.localRotation = Quaternion.identity;
-
+        
         var rBody = drone.GetComponent<Rigidbody>();
         rBody.velocity = Vector3.zero;
         rBody.angularVelocity = Vector3.zero;
 
         return drone;
     }
-
-    private bool IsNearObstacle(Vector3 position, float radius)
-    {
-        // Check for any colliders with the tag "Obstacle" within the specified radius
-        Collider[] colliders = Physics.OverlapSphere(position, radius);
-        foreach (var collider in colliders)
-        {
-            if (collider.CompareTag("Obstacle"))
-            {
-                // If an obstacle is found within the radius, return true
-                return true;
-            }
-        }
-        // If no obstacles are found within the radius, return false
-        return false;
-    }
-
 }

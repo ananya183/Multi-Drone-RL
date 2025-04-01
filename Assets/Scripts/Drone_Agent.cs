@@ -12,7 +12,7 @@ public class Drone_Agent : Agent
     LayerMask dronesLayer; // For sensing drones
     protected Drone_Common drone_common;
     public Drone_Manager drone_Manager;
-    
+
     // Reward Valuations in High to Low Order
     private readonly float swarmationReward = 200.0f;
     private readonly float insideGoodRegionReward = 40.0f;
@@ -22,19 +22,22 @@ public class Drone_Agent : Agent
     private readonly float boundaryCollisionPenalty = -60.0f;
     private readonly float tooClosePenalty = -30.0f;
     private readonly float insideBadRegionPenalty = -10.0f;
-
     private readonly float rr_factor = 0.5f;
 
     private bool collidedWithObstacle = false;
     private bool collidedWithDrone = false;
     private bool collidedWithBoundary = false;
 
-
+    public HashSet<GameObject> swarmDrones = new HashSet<GameObject>();
+    public HashSet<GameObject> sensedDrones = new HashSet<GameObject>();
     public List<Vector2> sensedObjectsPos;
     //private Drone_Common droneCommon;
 
     [SerializeField] float TotalReward;
 
+    private int totalSensed;
+    private int prevSensed;
+    private int currentSensed;
 
     // [SerializeField] private Vector3 force;
     private System.Random random = new System.Random();
@@ -42,21 +45,35 @@ public class Drone_Agent : Agent
     {
         dronesLayer = LayerMask.NameToLayer("Drone");
         dronesLayer = 1 << dronesLayer;
+        swarmDrones = new HashSet<GameObject>();
     }
 
     private void Start()
     {
         rBody = GetComponent<Rigidbody>();
-        drone_common = GetComponent<Drone_Common>();
+        //droneCommon = GetComponent<Drone_Common>();
     }
 
     public override void OnEpisodeBegin()
     {
+        totalSensed = 0;
+        prevSensed = 0;
+        currentSensed = 0;
+        sensedDrones.Clear();
         TotalReward = 0;
+        swarmDrones.Clear();
+        swarmDrones.Add(this.gameObject);
     }
 
     public override void CollectObservations(VectorSensor sensor)
     {
+        prevSensed = sensedDrones.Count;
+        sensedDrones = SenseDrones();
+        currentSensed = sensedDrones.Count;
+
+        if (currentSensed > totalSensed)
+            totalSensed = currentSensed;
+
         //sensor.AddOneHotObservation(sensedDrones.Count, Drone_Values.NumberDrones - 1);
         sensedObjectsPos = SenseObjects();
 
@@ -76,9 +93,9 @@ public class Drone_Agent : Agent
         }
 
         // Adding Input of prevSensed, current sensed and total sensed to NN
-        sensor.AddObservation(drone_common.prevSensed);
-        sensor.AddObservation(drone_common.currentSensed);
-        sensor.AddObservation(drone_common.totalSensed);
+        sensor.AddObservation(prevSensed);
+        sensor.AddObservation(currentSensed);
+        sensor.AddObservation(totalSensed);
     }
 
     public override void OnActionReceived(ActionBuffers actions)
@@ -102,31 +119,21 @@ public class Drone_Agent : Agent
         AddNetReward();
         //Debug.Log($"Cumulative Reward After Physicomimetics: {GetCumulativeReward()}");
 
-        if (drone_common.HasJustFormedSwarm())
+        if (HasJustFormedSwarm())
         {
-            var reboundReward = swarmationReward * rr_factor * (drone_common.swarmDrones.Count - 1);
+            var reboundReward = swarmationReward * rr_factor * (swarmDrones.Count - 1);
             AddReward(swarmationReward);
             AddReward(reboundReward);
         }
 
-        if (drone_common.IsInBadZone())
+        if (IsInBadZone())
         {
             AddReward(insideBadRegionPenalty);
         }
 
-        if (drone_common.IsInGoodZone())
+        if (IsInGoodZone())
         {
             AddReward(insideGoodRegionReward);
-        }
-
-        if (drone_common.IsTooCloseToOtherDrone())
-        {
-            AddReward(tooClosePenalty);
-        }
-
-        if (drone_common.DroneInSense())
-        {
-            AddReward(insideSensingZoneReward);
         }
 
         if (CollidedWithObstacle())
@@ -185,7 +192,7 @@ public class Drone_Agent : Agent
 
     private void AddDroneObservationsRandomly(VectorSensor sensor)
     {
-        int totalSlots = Drone_Values.MaxNumberDrones - 1;
+        int totalSlots = Drone_Values.NumberDrones - 1;
         Dictionary<int, Vector2> observationSlots = new Dictionary<int, Vector2>();
 
         // Fill the dictionary with Vector2.positiveInfinity for all slots
@@ -195,7 +202,7 @@ public class Drone_Agent : Agent
         }
 
         // Randomly assign sensed drone observations
-        foreach (var drone in drone_common.sensedDrones)
+        foreach (var drone in sensedDrones)
         {
             int index;
             do
@@ -216,25 +223,21 @@ public class Drone_Agent : Agent
     private void AddNetReward()
     {
         float netReward = 0;
-        float droneProximityReward = AddDroneProximityReward();
+        float droneProximityReward = AddDroneProximityReward();  
         netReward += droneProximityReward;
         float survivalReward = AddSurvivalReward();
         netReward += survivalReward;
 
         // Sensed Number Changed Reward
-
-        if (drone_common.currentSensed < drone_common.totalSensed)
-            netReward += (drone_common.totalSensed - drone_common.currentSensed) * (-0.1f);
-        if (drone_common.currentSensed > drone_common.prevSensed)
-            netReward += 20f;
-        if (drone_common.swarmDrones.Count < drone_common.totalSensed)
-            netReward += -5f;
-
+        if (currentSensed < totalSensed)
+            netReward += (totalSensed - currentSensed) * (-0.0001f);
+        if (currentSensed > prevSensed)
+            netReward += 0.01f;
         float obstacleProximityReward = AddObstacleProximityReward();
         netReward += obstacleProximityReward;
-        if (drone_common.sensedDrones.Count + sensedObjectsPos.Count > 0)
+        if (sensedDrones.Count + sensedObjectsPos.Count > 0)
         {
-            netReward = netReward / (drone_common.sensedDrones.Count + sensedObjectsPos.Count);
+            netReward = netReward / (sensedDrones.Count + sensedObjectsPos.Count);
         }
 
         float lostReward = AddLostReward();
@@ -245,7 +248,7 @@ public class Drone_Agent : Agent
     private float AddDroneProximityReward()
     {
         float netReward = 0;
-        foreach (var drone in drone_common.sensedDrones)
+        foreach (var drone in sensedDrones)
         {
             if (drone != this.gameObject)               // Don't check against itself
             {
@@ -260,6 +263,112 @@ public class Drone_Agent : Agent
         return netReward;
     }
 
+
+    bool HasJustFormedSwarm()
+    {
+        foreach (GameObject drone in sensedDrones)
+        {
+            var drone_script = drone.GetComponent<Drone_Agent>();
+            if (drone != this.gameObject)
+            {
+                float distance = Vector3.Distance(this.transform.position, drone.transform.position);
+                if (distance <= Drone_Values.R_sense)
+                {
+                    // Check if Incomer Drone is a Fellow (part of its own swarm) or Not:
+                    // Proceed only if the Incomer is a Foreign Drone:
+                    if (!swarmDrones.Contains(drone))
+                    {
+                        // Case 1: this and drone are both single ;P
+                        if (this.swarmDrones.Count == 1 && drone_script.swarmDrones.Count == 1)
+                        {
+                            swarmDrones.Add(drone);
+                            return true;
+                        }
+
+                        // Case 2: this is single, drone is swarmed :(
+                        else if (this.swarmDrones.Count == 1 && drone_script.swarmDrones.Count > 1)
+                        {
+                            foreach (GameObject droneMember in drone_script.swarmDrones)
+                            {
+                                if (!this.swarmDrones.Contains(droneMember))
+                                {
+                                    swarmDrones.Add(droneMember);
+                                    return true;
+                                }
+                            }
+                        }
+
+                        // Case 3: this is swarmed, drone is single :O
+                        else if (this.swarmDrones.Count > 1 && drone_script.swarmDrones.Count == 1)
+                        {
+                            swarmDrones.Add(drone);
+                            return true;
+                        }
+
+                        // Case 4: Both are swarmed in their own different Swarms ~( -_-)~
+                        else if (this.swarmDrones.Count > 1 && drone_script.swarmDrones.Count > 1)
+                        {
+                            foreach (GameObject droneMember in drone_script.swarmDrones)
+                            {
+                                if (!this.swarmDrones.Contains(droneMember))
+                                {
+                                    swarmDrones.Add(droneMember);
+                                    return true;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    bool IsTooCloseToOtherDrone()
+    {
+        foreach (GameObject drone in swarmDrones)
+            if (drone != this.gameObject)                // Don't check against itself
+            {   
+                float distance = Vector3.Distance(this.transform.position, drone.transform.position);
+                if (distance < Drone_Values.R_tooclose)
+                {
+                    return true;
+                }
+            }
+        return false;
+    }
+
+    bool IsInBadZone()
+    {
+        foreach (GameObject drone in swarmDrones)
+        {
+            if (drone != this.gameObject)               // Don't check against itself
+            {
+                float distance = Vector3.Distance(this.transform.position, drone.transform.position);
+                if ((distance >= Drone_Values.R_tooclose) && (distance <= Drone_Values.R_in))
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    bool IsInGoodZone()
+    {
+        foreach (GameObject drone in swarmDrones)
+        {
+            if (drone != this.gameObject)               // Don't check against itself
+            {
+                float distance = Vector3.Distance(this.transform.position, drone.transform.position);
+                if ((distance > Drone_Values.R_in) && (distance <= Drone_Values.R_out))
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
     bool CollidedWithObstacle()
     {
@@ -305,20 +414,20 @@ public class Drone_Agent : Agent
             }
         }
         return netReward;
-
+        
     }
 
     private float AddLostReward()
     {
         float netReward = 0;
-        if (drone_common.sensedDrones.Count == 0)
+        if (sensedDrones.Count == 0)
         {
             netReward = -1;
         }
         return netReward;
     }
 
-
+    
     //private HashSet<GameObject> SenseDrones()
     //{
     //    HashSet<GameObject> sensed = new HashSet<GameObject>();
@@ -338,7 +447,17 @@ public class Drone_Agent : Agent
     //}
 
     // Case 1: infinite drone sensing
+    private HashSet<GameObject> SenseDrones()
+    {
+        HashSet<GameObject> sensed = new HashSet<GameObject>();
 
+        foreach (var drone in drone_Manager.drones)
+        {
+            if (drone != this.gameObject)
+                sensed.Add(drone);
+        }
+        return sensed;
+    }
 
     //private List<Vector2> SenseObjects()
     //{
@@ -376,88 +495,27 @@ public class Drone_Agent : Agent
     //    return hitPos;
     //}
 
-    //private List<Vector2> SenseObjects()
-    //{
-    //    List<Vector2> hitPos = new List<Vector2>();
-    //    Vector3 origin = transform.position;
-    //    float angleIncrement = 360f / Drone_Values.NumberRays;
-    //    for (int i = 0; i < Drone_Values.NumberRays; i++)
-    //    {
-    //        float angle = i * angleIncrement;
-    //        Vector3 direction = Quaternion.Euler(0, angle, 0) * Vector3.forward;
-
-    //        // Perform the raycast
-    //        if (Physics.Raycast(origin, direction, out RaycastHit hit))
-    //        {
-    //            var localHitPos = transform.InverseTransformPoint(hit.point);
-    //            hitPos.Add(localHitPos);
-    //            //Debug.DrawLine(origin, hit.point, Color.red);
-    //        }
-    //    }
-
-    //    return hitPos;
-    //}
-
     private List<Vector2> SenseObjects()
     {
         List<Vector2> hitPos = new List<Vector2>();
         Vector3 origin = transform.position;
         float angleIncrement = 360f / Drone_Values.NumberRays;
-
         for (int i = 0; i < Drone_Values.NumberRays; i++)
         {
             float angle = i * angleIncrement;
             Vector3 direction = Quaternion.Euler(0, angle, 0) * Vector3.forward;
 
             // Perform the raycast
-            if (Physics.Raycast(origin, direction, out RaycastHit hit, Drone_Values.R_sense))
+            if (Physics.Raycast(origin, direction, out RaycastHit hit))
             {
-                // Check if the hit object is an obstacle or drone
-                if (hit.collider.gameObject.tag == "Obstacle")
-                {
-                    // If we hit an obstacle, we do not sense anything behind it
-                    hitPos.Add(Vector3to2(direction.normalized * Drone_Values.R_sense));
-                }
-                else if (hit.collider.gameObject.tag == "Drone")
-                {
-                    // Check if there is an obstacle between the current drone and the sensed drone
-                    RaycastHit obstacleHit;
-                    if (Physics.Raycast(origin, hit.point - origin, out obstacleHit, Vector3.Distance(origin, hit.point)))
-                    {
-                        // If the obstacle is closer than the drone, ignore this drone
-                        if (obstacleHit.collider.gameObject.tag == "Obstacle")
-                        {
-                            hitPos.Add(Vector3to2(direction.normalized * Drone_Values.R_sense)); // Empty sensing for obstacle
-                        }
-                        else
-                        {
-                            var localHitPos = transform.InverseTransformPoint(hit.point);
-                            hitPos.Add(localHitPos);  // Drone is visible (no obstacle in between)
-                        }
-                    }
-                    else
-                    {
-                        // If no obstacle is hit, the drone is sensed
-                        var localHitPos = transform.InverseTransformPoint(hit.point);
-                        hitPos.Add(localHitPos);
-                    }
-                }
-                else
-                {
-                    // If it's neither obstacle nor drone, it's some other object
-                    hitPos.Add(Vector3to2(hit.point));
-                }
-            }
-            else
-            {
-                // If nothing was hit, assume max sensing range
-                hitPos.Add(Vector3to2(direction.normalized * Drone_Values.R_sense));
+                var localHitPos = transform.InverseTransformPoint(hit.point);
+                hitPos.Add(localHitPos);
+                //Debug.DrawLine(origin, hit.point, Color.red);
             }
         }
 
         return hitPos;
     }
-
 
     //private void SenseObjects(out List<float> obstacleDistance)
     //{
@@ -492,9 +550,9 @@ public class Drone_Agent : Agent
     //    }
     //}
 
-    private Vector2 Vector3to2(Vector3 v)
+    private Vector2 Vector3to2 (Vector3 v)
     {
-        Vector2 v2 = new Vector2(v.x, v.z);
+        Vector2 v2 = new Vector2 (v.x, v.z);
         return v2;
     }
 }
